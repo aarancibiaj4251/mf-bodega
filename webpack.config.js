@@ -26,8 +26,12 @@ module.exports = (webpackConfigEnv, argv) => {
       ]
     },
     externals: [
-        /^@arancibia\/.+/, 'history',
-      'react', 'react-router', 'react-dom', '@remix-run/router',
+        /^@arancibia\/.+/,
+      'react', 'react-dom',
+      'react-router',
+      'react-router-dom',
+      '@remix-run/router',
+      '@tanstack/react-query',
       'redux',
       'moment'
     ],

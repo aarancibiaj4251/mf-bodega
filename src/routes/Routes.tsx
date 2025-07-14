@@ -24,6 +24,6 @@ const routes = createBrowserRouter([
     },
     {path: '/login', element: <SignInSignOutPage />},
     {path: '/*', element: <div>Pagina no encontrada</div>},
-  ]);
+  ], {basename: '/bodega-project'});
 
   export default routes;
