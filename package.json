@@ -57,7 +57,8 @@
     "webpack-config-single-spa-react-ts": "^4.0.0",
     "webpack-config-single-spa-ts": "^4.0.0",
     "webpack-dev-server": "^4.0.0",
-    "webpack-merge": "^5.8.0"
+    "webpack-merge": "^5.8.0",
+    "ajv": "^8.17.1"
   },
   "dependencies": {
     "@ant-design/icons": "5.6.1",
