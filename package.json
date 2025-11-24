@@ -5,7 +5,7 @@
     "start:standalone": "webpack serve --env standalone --port 8500",
     "build": "concurrently yarn:build:*",
     "build:webpack": "webpack --mode=production",
-    "build:dev": "webpack --mode=production --env NODE_ENV=development",
+    "build:dev": "webpack --mode=production --env NODE_ENV=development --env ouput.publicPath=https://arancibia.b-cdn.net/bodega-project/",
     "analyze": "webpack --mode=production --env analyze",
     "lint": "eslint src --ext js,ts,tsx",
     "format": "prettier --write .",

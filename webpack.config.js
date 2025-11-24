@@ -12,10 +12,6 @@ module.exports = (webpackConfigEnv, argv) => {
   });
 
   return merge(defaultConfig, {
-    // modify the webpack config however you'd like to by adding to this object
-    output: {
-      publicPath: 'https://arancibia.b-cdn.net/bodega-project/',
-    },
     module: {
       rules: [
         {
