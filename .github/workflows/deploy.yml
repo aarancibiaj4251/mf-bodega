@@ -30,7 +30,7 @@ jobs:
           source: "dist"
           destination: "bodega-project"
           storageZoneName: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_NAME }}"
-          storagePassword: "${{ secrets.BUNNY_STORAGE_PASSWORD }}"
+          storagePassword: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_PASSWORD }}"
           storageEndpoint: "sg.storage.bunnycdn.com"
           accessKey: "${{ secrets.BUNNY_API_ACCESS_KEY }}"
           pullZoneId: "${{ secrets.BUNNY_ARANCIBIA_PULL_ZONE_ID }}"
