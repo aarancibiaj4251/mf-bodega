@@ -1,0 +1,41 @@
+name: Upload to Bunny Storage
+env:
+  environment: "dev"
+on:
+  push:
+    branches: [ all-projects ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 18.20.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build App
+        run: npm run build:$environment
+
+      - name: Upload files to Bunny Storage
+        uses: ayeressian/bunnycdn-storage-deploy@v2.4.0
+        with:
+          source: "dist"
+          destination: "bodega-project"
+          storageZoneName: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_NAME }}"
+          storagePassword: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_PASSWORD }}"
+          storageEndpoint: "sg.storage.bunnycdn.com"
+          accessKey: "${{ secrets.BUNNY_API_ACCESS_KEY }}"
+          pullZoneId: "${{ secrets.BUNNY_ARANCIBIA_PULL_ZONE_ID }}"
+          upload: "true"
+          remove: "false"
+          purgePullZone: "true"
+          purgePullZoneDelay: "5"
+          maxRetries: "5"

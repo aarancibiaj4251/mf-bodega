@@ -1,0 +1,83 @@
+.checkout-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+
+  .checkout-header {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+
+    .header-block {
+      text-transform: capitalize;
+      width: 23%;
+
+      &:last-child {
+        width: 8%;
+      }
+
+      span {
+        color: black;
+      }
+    }
+  }
+
+  .test-warning {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 24px;
+    color: red;
+  }
+
+  button {
+    margin-left: auto;
+    margin-top: 50px;
+  }
+
+  .total {
+    margin-top: 30px;
+    margin-left: auto;
+    font-size: 36px;
+    color: black;
+  }
+
+  .checkout-payment {
+    width: 100%;
+    margin-top: 20px;
+
+    div {
+      flex: 1;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    &--button {
+      flex: 1;
+
+      &-paypal {
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        background-color: red;
+        border-radius: 5px;
+        margin-top: 0;
+        height: 45px;
+      }
+    }
+  }
+}
+
+.google-pay-button-container {
+  width: 100% !important;
+}
+
+.checkout-page button#gpay-button-online-api-id {
+  width: 100% !important;
+  margin-top: 15px !important;
+  height: 45px;
+}

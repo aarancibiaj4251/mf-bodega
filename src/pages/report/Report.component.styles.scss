@@ -1,0 +1,19 @@
+.report {
+  padding: 20px;
+
+  &__title {
+    color: black;
+    text-align: center;
+    padding: 10px;
+  }
+
+  &__year {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  &__chart {
+
+  }
+}
