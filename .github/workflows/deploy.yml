@@ -3,7 +3,7 @@ env:
   environment: "dev"
 on:
   push:
-    branches: [ all-projects ]
+    branches: [ develop ]
 
 jobs:
   deploy:
