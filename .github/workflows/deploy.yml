@@ -23,14 +23,14 @@ jobs:
 
       - name: 'Create env file'
         run: |
-          touch .env.$environment
-          echo REACT_APP_API_URL_MS="https://bodega-store-dd3d3b32bb05.herokuapp.com/api/" >> .env
-          echo REACT_APP_API_URL_PAYPAL="https://api-m.sandbox.paypal.com/v1" >> .env
-          echo REACT_APP_PAYPAL_CLIENT_ID=${{ secrets.REACT_APP_PAYPAL_CLIENT_ID }} >> .env
-          echo REACT_APP_API_URL_PAYPAL_PASSWORD=${{ secrets.REACT_APP_API_URL_PAYPAL_PASSWORD }} >> .env
-          echo REACT_APP_GOOGLE_PAY_ENVIRONMENT=TEST >> .env
-          echo REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID=${{ secrets.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID }} >> .env
-          cat .env.$environment
+          touch .env.development
+          echo REACT_APP_API_URL_MS="https://bodega-store-dd3d3b32bb05.herokuapp.com/api/" >> .env.development
+          echo REACT_APP_API_URL_PAYPAL="https://api-m.sandbox.paypal.com/v1" >> .env.development
+          echo REACT_APP_PAYPAL_CLIENT_ID=${{ secrets.REACT_APP_PAYPAL_CLIENT_ID }} >> .env.development
+          echo REACT_APP_API_URL_PAYPAL_PASSWORD=${{ secrets.REACT_APP_API_URL_PAYPAL_PASSWORD }} >> .env.development
+          echo REACT_APP_GOOGLE_PAY_ENVIRONMENT=TEST >> .env.development
+          echo REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID=${{ secrets.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID }} >> .env.development
+          cat .env.development
 
       - name: Build App
         run: npm run build:dev
