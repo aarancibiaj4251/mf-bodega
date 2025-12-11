@@ -42,7 +42,7 @@ module.exports = (webpackConfigEnv, argv) => {
         // "process.env": JSON.stringify(process.env),
       }),
       new Dotenv({
-        path: `.env.${webpackConfigEnv.NODE_ENV}`,
+        path: `.env`,
       })
     ],
   });
