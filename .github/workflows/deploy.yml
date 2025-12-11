@@ -1,6 +1,6 @@
 name: Upload to Bunny Storage
 env:
-  environment: "dev"
+  environment: "development"
 on:
   push:
     branches: [ develop ]
@@ -21,8 +21,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: 'Create env file'
+        run: |
+          touch .env.$environment
+          echo REACT_APP_API_URL_MS="https://bodega-store-dd3d3b32bb05.herokuapp.com/api/" >> .env
+          echo REACT_APP_API_URL_PAYPAL="https://api-m.sandbox.paypal.com/v1" >> .env
+          echo REACT_APP_PAYPAL_CLIENT_ID=${{ secrets.REACT_APP_PAYPAL_CLIENT_ID }} >> .env
+          echo REACT_APP_API_URL_PAYPAL_PASSWORD=${{ secrets.REACT_APP_API_URL_PAYPAL_PASSWORD }} >> .env
+          echo REACT_APP_GOOGLE_PAY_ENVIRONMENT=TEST >> .env
+          echo REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID=${{ secrets.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID }} >> .env
+          cat .env.$environment
+
       - name: Build App
-        run: npm run build:$environment
+        run: npm run build:dev
 
       - name: Upload files to Bunny Storage
         uses: ayeressian/bunnycdn-storage-deploy@v2.4.0
