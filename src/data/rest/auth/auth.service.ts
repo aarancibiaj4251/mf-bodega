@@ -17,7 +17,10 @@ export const login = (username: string, password: string) => {
 
 export const register = (user: Partial<User>) => {
 
-  user.id = uuidV4();
+  user = {
+    ...user,
+    id: uuidV4(),
+  };
 
   return new Promise(((resolve, reject) => {
     axios.post(Constants.URL_MS_1 + 'user/register', user)
