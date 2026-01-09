@@ -30,6 +30,10 @@ jobs:
           echo REACT_APP_API_URL_PAYPAL_PASSWORD=${{ secrets.REACT_APP_API_URL_PAYPAL_PASSWORD }} >> .env
           echo REACT_APP_GOOGLE_PAY_ENVIRONMENT=TEST >> .env
           echo REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID=${{ secrets.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID }} >> .env
+          echo KEYCLOAK_URL=${{ secrets.KEYCLOAK_URL }} >> .env
+          echo KEYCLOAK_REALM=${{ secrets.KEYCLOAK_REALM }} >> .env
+          echo KEYCLOAK_CLIENT_ID=${{ secrets.KEYCLOAK_CLIENT_ID }} >> .env
+          echo KEYCLOAK_INIT_REDIRECT_URL=${{ secrets.KEYCLOAK_INIT_REDIRECT_URL }} >> .env
           cat .env
 
       - name: Build App
