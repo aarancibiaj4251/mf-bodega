@@ -66,6 +66,7 @@
     "@ant-design/icons": "5.6.1",
     "@google-pay/button-react": "^3.1.0",
     "@paypal/react-paypal-js": "^8.1.3",
+    "@react-keycloak/web": "^3.4.0",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.4.0",
     "@tanstack/react-query": "5.74.4",
@@ -79,6 +80,7 @@
     "formik": "^2.4.6",
     "formik-antd": "^2.0.5",
     "jwt-decode": "^4.0.0",
+    "keycloak-js": "^26.2.2",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -91,6 +93,10 @@
     "single-spa": "^5.9.3",
     "single-spa-react": "^4.3.1",
     "yup": "^1.6.1"
+  },
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
   },
   "types": "dist/arancibia-main.d.ts"
 }

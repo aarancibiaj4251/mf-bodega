@@ -17,6 +17,7 @@ import {QRCode} from '../../domain/interfaces/QRCode';
 import PayPayLogo from '../../assets/img/logo_paypay.svg';
 import GooglePayButtonComponent from '../../components/google-pay-button/GooglePayButton.component';
 import * as utilTypes from '../../utils/types';
+import keycloak from '../../auth/keycloak.config';
 
 const CheckOutPage = () => {
   const navigate = useNavigate();
@@ -44,9 +45,9 @@ const CheckOutPage = () => {
     }
   };
 
-  const executePayment = () => {
+  const executePayment = async () => {
     if (!currentUser) {
-      navigate('/login');
+      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/carrito'});
       return;
     }
     mutate({cartItems, total});

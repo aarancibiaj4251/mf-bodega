@@ -10,6 +10,7 @@ import {CartItem} from '../../domain/interfaces/CartItem';
 import './SubmitPayment.component.scss';
 import {ApprovedOrder} from '../../domain/interfaces/ApprovedOrder';
 import {clearCart} from '../../redux/cart/cartSlice';
+import keycloak from '../../auth/keycloak.config';
 
 
 interface Props {
@@ -32,7 +33,7 @@ const SubmitPaymentComponent = ({token, clearCart, cartItems, total}: Props) => 
 
   const handleCreateOrder = async (): Promise<string> => {
     if (!currentUser) {
-      navigate('/login');
+      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/carrito'});
       return Promise.reject();
     }
     try {

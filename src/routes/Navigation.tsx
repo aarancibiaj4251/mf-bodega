@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router-dom';
 import HeaderComponent from '../components/header/Header.component';
 import { Layout, Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
@@ -15,18 +15,21 @@ import {Profile} from '../domain/model/Profile';
 import {User} from '../domain/interfaces/user/User';
 import {getProfiles} from '../data/rest/profiles.service';
 import {Helpers} from '../utils/helpers';
+import keycloak from '../auth/keycloak.config';
 
 const Navigation = () => {
   const {pathname} = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
   const [current, setCurrent] = useState(pathname);
+  let [menuItems, setMenuItems] = useState<ItemType[]>([]);
+  const user = useSelector(selectCurrentUser);
+
+  const dispatch = useDispatch();
+
   const mutation = useMutation<Profile[], Error, {user: User}>({
     mutationFn: () => getProfiles(user),
     onSuccess: (profiles) => setMenuItems(Helpers.buildMenuItems(profiles)),
   });
-  let [menuItems, setMenuItems] = useState<ItemType[]>([]);
+
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key);
   };
@@ -42,7 +45,7 @@ const Navigation = () => {
   const onLogoutClick = () => {
     dispatch(logout());
     dispatch(clearCart());
-    navigate('/');
+    keycloak.logout({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL})
   }
 
   return (
