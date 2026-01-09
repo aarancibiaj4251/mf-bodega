@@ -95,8 +95,8 @@
     "yup": "^1.6.1"
   },
   "engines": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "14.21.3",
+    "npm": "6.14.18"
   },
   "types": "dist/arancibia-main.d.ts"
 }
