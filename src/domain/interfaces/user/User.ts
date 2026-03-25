@@ -11,6 +11,7 @@ export interface User {
   profiles: Array<Profile>;
   email: string;
   tickets: any;
+  hasRole: boolean;
   isGoogleAccount?: boolean;
 }
 

@@ -1,15 +1,12 @@
-import axios from 'axios';
-import {Constants} from '../../utils/constants';
 import {CartItem} from '../../domain/interfaces/CartItem';
 import {QRCode} from '../../domain/interfaces/QRCode';
 import {createBodySale} from './create-body-sale.request';
 import {User} from '../../domain/interfaces/user/User';
-
-
+import {apiClient} from '../../config/axios/axios.config';
 
 export const createQr = (orderItems: CartItem[], total: number): Promise<QRCode> => {
   return new Promise(((resolve, reject) => {
-    axios.post(`${Constants.URL_MS_1}payment/paypay/createQr`, {
+    apiClient.post(`payment/paypay/createQr`, {
       amount: {
         amount: total,
       },
@@ -32,7 +29,7 @@ export const createQr = (orderItems: CartItem[], total: number): Promise<QRCode>
 
 export const saveSaleWithGoogle = (cartItems: Array<CartItem>, total: number, user: User) => {
   return new Promise(((resolve, reject) => {
-    axios.post(Constants.URL_MS_1 + `payment/google`, createBodySale(cartItems, total, user))
+    apiClient.post(`payment/google`, createBodySale(cartItems, total, user))
       .then(((results) => results.data))
       .then((value) => resolve(value))
       .catch(e => reject(e))
