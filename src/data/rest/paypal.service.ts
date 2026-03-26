@@ -4,6 +4,7 @@ import {IdentityPayPalToken, PayPalToken} from '../../domain/interfaces/PayPalTo
 import {CartItem} from '../../domain/interfaces/CartItem';
 import {User} from '../../domain/interfaces/user/User';
 import {createBodySale} from './create-body-sale.request';
+import {apiClient} from '../../config/axios/axios.config';
 
 export const createPaypalToken = (): Promise<PayPalToken> => {
   const params = new URLSearchParams();
@@ -71,7 +72,7 @@ export const createOrder = (cartItems: Array<CartItem>, total: number): Promise<
     }
   };
   return new Promise(((resolve, reject) => {
-    axios.post(Constants.URL_MS_1 + 'sale/order', body)
+    apiClient.post('sale/order', body)
       .then(((results) => results.data))
       .then((value) => resolve(value))
       .catch(e => reject(e))
@@ -80,7 +81,7 @@ export const createOrder = (cartItems: Array<CartItem>, total: number): Promise<
 
 export const approveOrder = (orderId: string, cartItems: Array<CartItem>, total: number, user: User) => {
   return new Promise(((resolve, reject) => {
-    axios.post(Constants.URL_MS_1 + `sale/order/${orderId}/capture`, createBodySale(cartItems, total, user))
+    apiClient.post(`sale/order/${orderId}/capture`, createBodySale(cartItems, total, user))
       .then(((results) => results.data))
       .then((value) => resolve(value))
       .catch(e => reject(e))

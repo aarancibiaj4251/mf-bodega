@@ -53,7 +53,10 @@ const App = () => {
         dispatch(loginSlice(userInfo));
         if (user.hasRole) {
           getProfiles(user)
-            .then(userProfiles => profiles = userProfiles)
+            .then(userProfiles => {
+              profiles = userProfiles;
+              dispatch(setProfiles(profiles));
+            })
             .catch(async _ => {
               profiles = await getGeneralProfiles();
               dispatch(setProfiles(profiles));
