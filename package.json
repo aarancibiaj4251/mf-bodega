@@ -1,8 +1,9 @@
 {
   "name": "@arancibia/bodega",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "scripts": {
     "start": "webpack serve --port 8500 --env NODE_ENV=local",
+    "start:dev": "webpack serve --port 8500 --env NODE_ENV=development",
     "start:standalone": "webpack serve --env standalone --port 8500",
     "build": "concurrently yarn:build:*",
     "build:webpack": "webpack --mode=production",

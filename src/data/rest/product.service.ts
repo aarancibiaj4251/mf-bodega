@@ -1,10 +1,9 @@
-import axios from 'axios';
-import { Constants } from '../../utils/constants';
 import {Product} from '../../domain/interfaces/Product';
+import {apiClient} from '../../config/axios/axios.config';
 
 export const getProducts = (): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
-    axios.get(Constants.URL_MS_1 + 'products', {
+    apiClient.get('products', {
     })
       .then(((results) => results.data))
       .then(products => resolve(products))
@@ -14,7 +13,7 @@ export const getProducts = (): Promise<Array<any>> => {
 
 export const saveProduct = (product: Partial<Product>): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
-    axios.post(Constants.URL_MS_1 + 'products', product)
+    apiClient.post('products', product)
       .then(((results) => results.data))
       .then(products => resolve(products))
       .catch(e => reject(e))
@@ -23,7 +22,7 @@ export const saveProduct = (product: Partial<Product>): Promise<Array<any>> => {
 
 export const deleteProduct = (id: string): Promise<any> => {
   return new Promise(((resolve, reject) => {
-    axios.delete(Constants.URL_MS_1 + `products/${id}`, {
+    apiClient.delete(`products/${id}`, {
     })
       .then(((results) => results.data))
       .then(products => resolve(products))
@@ -33,7 +32,7 @@ export const deleteProduct = (id: string): Promise<any> => {
 
 export const getCategories = (): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
-    axios.get(Constants.URL_MS_1 + 'categories', {
+    apiClient.get('categories', {
     })
       .then(((results) => results.data))
       .then(products => resolve(products))
