@@ -12,6 +12,7 @@ import {Helpers} from "../../utils/helpers";
 import {GiftOutlined} from '@ant-design/icons'
 import {selectLottery} from '../../redux/lottery/lottery.selector';
 import {toggle} from '../../redux/cart/cartSlice';
+import keycloak from '../../config/auth/keycloak.config';
 
 const { Header } = Layout;
 
@@ -41,7 +42,7 @@ const HeaderComponent = () => {
       <Header className="header flex-no-wrap justify-content-between align-items-center" >
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
         <div className="header__info">
-          { user && (<Link to="/informacion" className="color-black">{Helpers.fullName(user)}</Link>)}
+          { keycloak.authenticated && (<Link to="/informacion" className="color-black">{Helpers.fullName(user)}</Link>)}
           {
             lottery && (
               <Popover placement="bottom" content={() => content(user, navigate)} title="Estos son tus tickets">

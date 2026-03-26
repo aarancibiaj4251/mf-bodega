@@ -11,16 +11,14 @@ import {createQr} from '../../data/rest/payment.service';
 import {usePaypalPayment} from '../../data/hooks/usePaypalPayment';
 import {useMutation} from '@tanstack/react-query';
 import SubmitPaymentComponent from '../../components/submit-payment/SubmitPayment.component';
-import {useNavigate} from 'react-router-dom';
 import {CartItem} from '../../domain/interfaces/CartItem';
 import {QRCode} from '../../domain/interfaces/QRCode';
 import PayPayLogo from '../../assets/img/logo_paypay.svg';
 import GooglePayButtonComponent from '../../components/google-pay-button/GooglePayButton.component';
 import * as utilTypes from '../../utils/types';
-import keycloak from '../../auth/keycloak.config';
+import keycloak from '../../config/auth/keycloak.config';
 
 const CheckOutPage = () => {
-  const navigate = useNavigate();
   const {token} = usePaypalPayment();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalPaymentOpen, setIsModalPaymentOpen] = useState(false);
@@ -46,7 +44,7 @@ const CheckOutPage = () => {
   };
 
   const executePayment = async () => {
-    if (!currentUser) {
+    if (!keycloak.authenticated) {
       await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/carrito'});
       return;
     }

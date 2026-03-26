@@ -10,25 +10,15 @@ import {selectCurrentUser} from '../redux/user/user.selector';
 import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../redux/user/userSlice';
 import {clearCart} from '../redux/cart/cartSlice';
-import {useMutation} from '@tanstack/react-query';
-import {Profile} from '../domain/model/Profile';
-import {User} from '../domain/interfaces/user/User';
-import {getProfiles} from '../data/rest/profiles.service';
 import {Helpers} from '../utils/helpers';
-import keycloak from '../auth/keycloak.config';
+import keycloak from '../config/auth/keycloak.config';
 
 const Navigation = () => {
   const {pathname} = useLocation();
   const [current, setCurrent] = useState(pathname);
   let [menuItems, setMenuItems] = useState<ItemType[]>([]);
   const user = useSelector(selectCurrentUser);
-
   const dispatch = useDispatch();
-
-  const mutation = useMutation<Profile[], Error, {user: User}>({
-    mutationFn: () => getProfiles(user),
-    onSuccess: (profiles) => setMenuItems(Helpers.buildMenuItems(profiles)),
-  });
 
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key);
@@ -39,8 +29,10 @@ const Navigation = () => {
   }, [pathname]);
 
   useEffect(() => {
-    mutation.mutate({user});
-  }, [user]);
+    if (user?.profiles) {
+      setMenuItems(Helpers.buildMenuItems(user.profiles));
+    }
+  }, [user?.profiles]);
 
   const onLogoutClick = () => {
     dispatch(logout());
@@ -65,7 +57,7 @@ const Navigation = () => {
         />
         <div className="sidebar__logout">
           {
-            user ? <Menu
+            keycloak.authenticated ? <Menu
                   style={{backgroundColor: '#04325f', color: 'white', width: '100%', 'borderRight': 'none'}}
                   mode="inline"
                   items={[{label: 'Logout', key: 'logout', dashed: true, icon: <LogoutOutlined />, onClick: onLogoutClick} as ItemType]}

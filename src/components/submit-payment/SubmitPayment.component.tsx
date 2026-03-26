@@ -10,7 +10,7 @@ import {CartItem} from '../../domain/interfaces/CartItem';
 import './SubmitPayment.component.scss';
 import {ApprovedOrder} from '../../domain/interfaces/ApprovedOrder';
 import {clearCart} from '../../redux/cart/cartSlice';
-import keycloak from '../../auth/keycloak.config';
+import keycloak from '../../config/auth/keycloak.config';
 
 
 interface Props {
