@@ -1,4 +1,4 @@
-import {AreaChartOutlined, EditOutlined, HomeOutlined, ShoppingOutlined} from '@ant-design/icons';
+import {AreaChartOutlined, EditOutlined, HomeOutlined, ShoppingOutlined, HistoryOutlined} from '@ant-design/icons';
 
 export class Constants {
   public static URL_MS_1 = process.env.REACT_APP_API_URL_MS;
@@ -7,7 +7,8 @@ export class Constants {
   public static ICONS = Object.create(
     {
       'HomeOutlined': HomeOutlined, 'ShoppingOutlined': ShoppingOutlined,
-      'AreaChartOutlined': AreaChartOutlined, 'EditOutlined': EditOutlined
+      'AreaChartOutlined': AreaChartOutlined, 'EditOutlined': EditOutlined,
+      'HistoryOutlined': HistoryOutlined,
     },
   );
 

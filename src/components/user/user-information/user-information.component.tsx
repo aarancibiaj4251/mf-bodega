@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { Card, Timeline} from 'antd';
+import {Button, Card, Result, Timeline} from 'antd';
 import {getSalesByUser} from '../../../data/rest/sale.service';
 import {useSelector} from 'react-redux';
 import {selectCurrentUser} from '../../../redux/user/user.selector';
 import './user-information.component.scss';
 import {useMutation} from '@tanstack/react-query';
 import {Order} from '../../../domain/interfaces/Order';
+import keycloak from '../../../config/auth/keycloak.config';
+import {LoginOutlined} from '@ant-design/icons';
 
 const UserInformation = () => {
 
@@ -20,12 +22,14 @@ const UserInformation = () => {
   const orderSales = (): Array<Order> => sales.sort((a: any, b: any) => new Date(a.dateRegister).getTime() > new Date(b.dateRegister).getTime() ? -1 : 1);
 
   useEffect(() => {
-    mutation.mutate({id: user.id});
-  }, []);
+    if (user.id) {
+      mutation.mutate({id: user.id});
+    }
+  }, [user.id]);
 
   return (
     <>
-      <Card>
+      { keycloak.authenticated ? <Card>
         <h1 className="text-center">
           Historial de compras
         </h1>
@@ -34,35 +38,39 @@ const UserInformation = () => {
           {
             sales.length ? orderSales()
               .map((sale: Order) => (
-              <Timeline.Item label={new Date(sale.dateRegister).toLocaleString()} key={sale.id}>
-                <div className="flex-wrap justify-content-between">
-                  <span className="mr-20"><span className="bold">Código: </span> {sale.code}</span>
-                  <span><span className="bold">Precio total: </span>  {sale.salePrice} 円</span>
-                </div>
-                <hr/>
-                {
-                  sale.saleDetail?.map((detail: any) => (
-                    <div className="sale-detail" key={detail.id}>
-                      <div className="flex-column">
-                        <span className="bold">Producto </span>
-                        <span className="">{detail.product?.name}</span>
+                <Timeline.Item label={new Date(sale.dateRegister).toLocaleString()} key={sale.id}>
+                  <div className="flex-wrap justify-content-between">
+                    <span className="mr-20"><span className="bold">Código: </span> {sale.code}</span>
+                    <span><span className="bold">Precio total: </span>  {sale.salePrice} 円</span>
+                  </div>
+                  <hr/>
+                  {
+                    sale.saleDetail?.map((detail: any) => (
+                      <div className="sale-detail" key={detail.id}>
+                        <div className="flex-column">
+                          <span className="bold">Producto </span>
+                          <span className="">{detail.product?.name}</span>
+                        </div>
+                        <div className="flex-column">
+                          <span className="bold">Cantidad</span>
+                          <span className="">{detail.quantity}</span>
+                        </div>
+                        <div className="flex-column">
+                          <span className="bold">Precio del producto </span>
+                          <span className="">{detail.price} 円</span>
+                        </div>
                       </div>
-                      <div className="flex-column">
-                        <span className="bold">Cantidad</span>
-                        <span className="">{detail.quantity}</span>
-                      </div>
-                      <div className="flex-column">
-                        <span className="bold">Precio del producto </span>
-                        <span className="">{detail.price} 円</span>
-                      </div>
-                    </div>
-                  ))
-                }
-              </Timeline.Item>
-            )) : null
+                    ))
+                  }
+                </Timeline.Item>
+              )) : null
           }
         </Timeline>
-      </Card>
+      </Card> : <Result
+        icon={<LoginOutlined />}
+        title="Please, log into the app!"
+        extra={<Button type="primary" onClick={() => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/informacion'})}>Log In</Button>}
+      />}
     </>
   );
 };
