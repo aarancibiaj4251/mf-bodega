@@ -1,0 +1,8 @@
+.ant-checkbox-group {
+    display: flex !important;
+    flex-wrap: wrap;
+
+    & > * {
+        flex: 1;
+    }
+}
