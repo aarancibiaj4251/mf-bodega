@@ -8,12 +8,14 @@ import {addCartItem, removeCartItem} from '../../redux/cart/cartSlice';
 
 export const useProduct = () => {
   const [products, setProducts] = useState<Array<Product>>([]);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getProducts()
       .then((products) => setProducts(products))
-      .catch();
+      .catch()
+      .finally(() => setLoaded(true));
   }, []);
 
   const onHandleChange = ({product: selectedProduct, count}: onChangeArgs) => {
@@ -37,5 +39,6 @@ export const useProduct = () => {
   return {
     products,
     onHandleChange,
+    loaded
   }
 }
