@@ -5,6 +5,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {Profile} from '../domain/model/Profile';
 import {Constants} from './constants';
+import {Product} from '../domain/interfaces/Product';
 
 
 export class Helpers {
@@ -27,6 +28,16 @@ export class Helpers {
             } as ItemType));
         }
         return [];
+    }
+
+    public static filterProducts(products: Product[], filters): Product[] {
+        if (!filters) {
+            return products;
+        }
+        if (filters.productsInput?.length) {
+            products = products.filter(product => product.name.toLowerCase().includes(filters.productsInput.toLowerCase()));
+        }
+        return products.filter(product => product.unitPrice <= filters.productsRangeMax && product.unitPrice >= filters.productsRangeMin);
     }
 
 }

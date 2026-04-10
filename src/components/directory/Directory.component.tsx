@@ -9,12 +9,28 @@ import {useWindowsSizeHeight} from '../../data/hooks/useWindowsSizeHeight';
 import ProductsFiltersComponent from '../products-filters/ProductsFiltersComponent';
 import ProductsSegmentedComponent from '../products-segmented/ProductsSegmented.component';
 import ProductsSearchComponent from '../products-search/ProductsSearch.component';
+import {
+  selectMaxAndMinPriceValue,
+} from '../../redux/product/product.selector';
+import {Helpers} from '../../utils/helpers';
 
 const DirectoryComponent = () => {
   const {products, onHandleChange, loaded} = useProduct();
+  const [productsInput, setProductsInput] = useState('');
+  const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
+  const [productsRangeMin, setProductsRangeMin] = useState<number>(minPriceValue);
+  const [productsRangeMax, setProductsRangeMax] = useState<number>(maxPriceValue);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const cartItems = useSelector(selectCartItems);
   const {isMobile} = useWindowsSizeHeight();
+
+  const handleFilterSearch = () => {
+    setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax}));
+  }
+
+  useEffect(() => {
+    handleFilterSearch();
+  }, [productsInput, productsRangeMin, productsRangeMax]);
 
   useEffect(() => {
     setProductsFiltered(products);
@@ -25,13 +41,19 @@ const DirectoryComponent = () => {
       <Col xs={24}>
         <Row justify={'space-between'} style={{gap: '15px 0px'}}>
           <Col xs={24} md={6} lg={4}>
-            <ProductsFiltersComponent />
+            {
+              products.length ? (
+                <ProductsFiltersComponent
+                  setProductsRangeMin={setProductsRangeMin}
+                  setProductsRangeMax={setProductsRangeMax}
+                />
+              ): <div>I am sorry, no loaded</div>
+            }
           </Col>
           <Col xs={24} md={18} lg={20} style={{padding: '2px 0 0 15px'}}>
             <div className={isMobile ? 'flex-wrap justify-content-between': 'flex-nowrap justify-content-between'} style={{gap: '10px', marginBottom: '10px'}}>
               <ProductsSearchComponent
-                products={products}
-                setProductsFiltered={setProductsFiltered}
+                setProductsInput={setProductsInput}
               />
               <div className={isMobile ? 'w-100 flex-nowrap justify-content-end': ''}>
                 <ProductsSegmentedComponent />

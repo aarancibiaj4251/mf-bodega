@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import storage from "redux-persist/lib/storage";
 import userReducer from './user/userSlice';
-import {productReducer} from './product/product.reducer';
 import { persistReducer } from 'redux-persist';
 import {loaderReducer} from "./loader/loader.reducer";
 import {saleReducer} from "./sale/sale.reducer";
 import {lotteryReducer} from './lottery/lottery.reducer';
 import cartReducer from './cart/cartSlice';
+import productReducer from './product/productSlice';
 
 const persistConfig = {
   key: "root",
@@ -16,7 +16,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-  // product: productReducer,
+  product: productReducer,
   cart: cartReducer,
   loader: loaderReducer,
   sale: saleReducer,

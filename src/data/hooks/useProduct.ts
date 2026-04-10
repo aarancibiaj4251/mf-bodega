@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from '../rest/product.service';
 import { onChangeArgs } from 'ajas-product-card/src/interfaces/interfaces';
-import { Product } from '../../domain/interfaces/Product';
 import { CartItem } from '../../domain/interfaces/CartItem';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addCartItem, removeCartItem} from '../../redux/cart/cartSlice';
+import {selectAllProducts} from '../../redux/product/product.selector';
+import {setProducts} from '../../redux/product/productSlice';
 
 export const useProduct = () => {
-  const [products, setProducts] = useState<Array<Product>>([]);
+  const products = useSelector(selectAllProducts);
   const [loaded, setLoaded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getProducts()
-      .then((products) => setProducts(products))
+      .then((products) => {
+        dispatch(setProducts(products));
+      })
       .catch()
       .finally(() => setLoaded(true));
   }, []);

@@ -9,6 +9,16 @@ export const selectAllProducts = createSelector(
   products => products
 )
 
+export const selectMaxAndMinPriceValue = createSelector(
+  [selectProducts],
+  products => products
+    .reduce((values, product) => {
+      return {
+        min: Math.min(product.unitPrice, values.min),
+        max: Math.max(product.unitPrice, values.max),
+      };
+    }, {min: 0, max: 0})
+)
 
 export const selectAllCategories = createSelector(
   [selectCategories],
