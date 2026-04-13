@@ -68,9 +68,13 @@ const App = () => {
       })
       .catch(async () => {
         dispatch(loginSlice(user))
-        await register(user);
-        profiles = await getGeneralProfiles();
-        dispatch(setProfiles(profiles));
+        register(user)
+          .then()
+          .catch()
+          .finally(async () => {
+            profiles = await getGeneralProfiles();
+            dispatch(setProfiles(profiles));
+          });
       });
   }
 
