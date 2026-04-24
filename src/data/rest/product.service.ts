@@ -1,5 +1,6 @@
 import {Product} from '../../domain/interfaces/Product';
 import {apiClient} from '../../config/axios/axios.config';
+import {Category} from '../../domain/interfaces/Category';
 
 export const getProducts = (): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
@@ -30,7 +31,7 @@ export const deleteProduct = (id: string): Promise<any> => {
   }));
 }
 
-export const getCategories = (): Promise<Array<any>> => {
+export const getCategories = (): Promise<Category[]> => {
   return new Promise(((resolve, reject) => {
     apiClient.get('categories', {
     })

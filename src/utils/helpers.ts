@@ -37,6 +37,9 @@ export class Helpers {
         if (filters.productsInput?.length) {
             products = products.filter(product => product.name.toLowerCase().includes(filters.productsInput.toLowerCase()));
         }
+        if (filters.productsCategories.length) {
+            products = products.filter(product => filters.productsCategories.includes(product.categoryId));
+        }
         return products.filter(product => product.unitPrice <= filters.productsRangeMax && product.unitPrice >= filters.productsRangeMin);
     }
 

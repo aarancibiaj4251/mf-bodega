@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Result, Timeline} from 'antd';
+import {Alert, Button, Card, Result, Timeline} from 'antd';
 import {getSalesByUser} from '../../../data/rest/sale.service';
 import {useSelector} from 'react-redux';
 import {selectCurrentUser} from '../../../redux/user/user.selector';
@@ -63,7 +63,7 @@ const UserInformation = () => {
                     ))
                   }
                 </Timeline.Item>
-              )) : null
+              )) : <Alert message="No records" type="info" />
           }
         </Timeline>
       </Card> : <Result

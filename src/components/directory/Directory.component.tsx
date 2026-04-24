@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from 'ajas-product-card';
 import { useProduct } from '../../data/hooks/useProduct';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { selectCartItems } from '../../redux/cart/cart.selector';
 import './Directory.component.scss';
 import {Col, Row} from 'antd';
@@ -13,6 +13,10 @@ import {
   selectMaxAndMinPriceValue,
 } from '../../redux/product/product.selector';
 import {Helpers} from '../../utils/helpers';
+import {useMutation} from '@tanstack/react-query';
+import {getCategories} from '../../data/rest/product.service';
+import {Category} from '../../domain/interfaces/Category';
+import {setCategories} from '../../redux/product/productSlice';
 
 const DirectoryComponent = () => {
   const {products, onHandleChange, loaded} = useProduct();
@@ -20,21 +24,31 @@ const DirectoryComponent = () => {
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
   const [productsRangeMin, setProductsRangeMin] = useState<number>(minPriceValue);
   const [productsRangeMax, setProductsRangeMax] = useState<number>(maxPriceValue);
+  const [productsCategories, setProductsCategories] = useState<string[]>([]);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
   const {isMobile} = useWindowsSizeHeight();
+  const {mutate} = useMutation<Category[], Error, {}>({
+    mutationFn: () => getCategories(),
+    onSuccess: categories => dispatch(setCategories(categories)),
+  });
 
   const handleFilterSearch = () => {
-    setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax}));
+    setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax, productsCategories}));
   }
 
   useEffect(() => {
     handleFilterSearch();
-  }, [productsInput, productsRangeMin, productsRangeMax]);
+  }, [productsInput, productsRangeMin, productsRangeMax, productsCategories]);
 
   useEffect(() => {
     setProductsFiltered(products);
   }, [loaded]);
+
+  useEffect(() => {
+    mutate({});
+  }, [products.length]);
 
   return (
     <Row>
@@ -46,6 +60,7 @@ const DirectoryComponent = () => {
                 <ProductsFiltersComponent
                   setProductsRangeMin={setProductsRangeMin}
                   setProductsRangeMax={setProductsRangeMax}
+                  setProductsCategories={setProductsCategories}
                 />
               ): <div>I am sorry, no loaded</div>
             }
