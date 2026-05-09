@@ -2,9 +2,9 @@ import {Product} from '../../domain/interfaces/Product';
 import {apiClient} from '../../config/axios/axios.config';
 import {Category} from '../../domain/interfaces/Category';
 
-export const getProducts = (): Promise<Array<any>> => {
+export const getProducts = (page = 0): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
-    apiClient.get('products', {
+    apiClient.get(`products/page/${page}`, {
     })
       .then(((results) => results.data))
       .then(products => resolve(products))

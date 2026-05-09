@@ -70,7 +70,7 @@ const Navigation = () => {
         <Content style={{ margin: '5px 0px' }}>
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Copyright ©2025 Created by Arancibia Alexis</Footer>
+        <Footer id="footer" style={{ textAlign: 'center' }}>Copyright ©2025 Created by Arancibia Alexis</Footer>
       </Layout>
     </Layout>
   );

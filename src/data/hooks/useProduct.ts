@@ -10,16 +10,24 @@ import {setProducts} from '../../redux/product/productSlice';
 export const useProduct = () => {
   const products = useSelector(selectAllProducts);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [lastPage, setIsLastPage] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts()
-      .then((products) => {
-        dispatch(setProducts(products));
+    if (lastPage) {
+      return;
+    }
+    setLoaded(false);
+    getProducts(page)
+      .then((response: any) => {
+        const productsDB = response.content;
+        setIsLastPage(response.last)
+        dispatch(setProducts(productsDB));
       })
       .catch()
       .finally(() => setLoaded(true));
-  }, []);
+  }, [page]);
 
   const onHandleChange = ({product: selectedProduct, count}: onChangeArgs) => {
     if (count === 0) {
@@ -42,6 +50,9 @@ export const useProduct = () => {
   return {
     products,
     onHandleChange,
-    loaded
+    loaded,
+    page,
+    setPage,
+    lastPage,
   }
 }
