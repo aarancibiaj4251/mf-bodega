@@ -1,17 +1,16 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../root-state.interface';
 
-const selectProducts = (state: RootState) => state.product.products;
-const selectCategories = (state: RootState) => state.product.categories;
+const selectProductState = (state: RootState) => state.product;
 
 export const selectAllProducts = createSelector(
-  [selectProducts],
-  products => products
+  [selectProductState],
+  product => product.products,
 )
 
 export const selectMaxAndMinPriceValue = createSelector(
-  [selectProducts],
-  products => products
+  [selectProductState],
+  ({products}) => products
     .reduce((values, product) => {
       return {
         min: Math.min(product.unitPrice, values.min),
@@ -21,6 +20,6 @@ export const selectMaxAndMinPriceValue = createSelector(
 )
 
 export const selectAllCategories = createSelector(
-  [selectCategories],
-  categories => categories
+  [selectProductState],
+  product => product.categories
 )
