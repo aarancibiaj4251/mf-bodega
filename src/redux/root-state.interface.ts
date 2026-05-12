@@ -4,6 +4,7 @@ import { UserState } from './user/user-state.interface';
 import {LoaderState} from "./loader/loader-state.interface";
 import {SaleState} from "./sale/sale-state.interface";
 import {LotteryState} from './lottery/lottery-state.interface';
+import {CategoryState} from './category/category-state.interface';
 
 export interface RootState {
   user: UserState,
@@ -11,5 +12,6 @@ export interface RootState {
   cart: CartState,
   loader: LoaderState,
   sale: SaleState,
-  lottery: LotteryState
+  lottery: LotteryState,
+  category: CategoryState,
 }

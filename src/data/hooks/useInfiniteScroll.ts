@@ -1,7 +1,10 @@
 import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {selectProductState} from '../../redux/product/product.selector';
 
 export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
   const [error, setError] = useState('');
+  const {isLastPage, isFiltering} = useSelector(selectProductState);
   useEffect(() => {
     const footer = document.getElementById(elementRef);
     if (!footer) {
@@ -10,7 +13,10 @@ export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
     }
     const obsCallback = function (entries: IntersectionObserverEntry[], observer: IntersectionObserver){
       const [entry] = entries;
-      if (entry.isIntersecting) {
+      if (isLastPage) {
+        observer.unobserve(footer);
+      }
+      if (entry.isIntersecting && !isFiltering) {
         resolve();
       }
     }
@@ -23,7 +29,7 @@ export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [isLastPage, isFiltering]);
 
   return {
     error

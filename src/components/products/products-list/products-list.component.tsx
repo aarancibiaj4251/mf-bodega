@@ -3,7 +3,6 @@ import {ProductButtons, ProductCard, ProductImage, ProductTitle} from 'ajas-prod
 import {Product} from '../../../domain/interfaces/Product';
 import {useSelector} from 'react-redux';
 import {selectCartItems} from '../../../redux/cart/cart.selector';
-import {Spin} from 'antd';
 import {onChangeArgs} from 'ajas-product-card/src/interfaces/interfaces';
 
 interface ProductListProps {
@@ -15,7 +14,7 @@ const ProductsListComponent = ({products, onHandleChange}: ProductListProps) => 
   const cartItems = useSelector(selectCartItems);
   if (!products.length) {
     return (<div className="flex-nowrap justify-content-center align-items-center" style={{width: '100%', height: '100vh'}}>
-        <Spin />
+        No information
     </div>);
   }
 

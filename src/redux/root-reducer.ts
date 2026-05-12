@@ -7,6 +7,7 @@ import {saleReducer} from "./sale/sale.reducer";
 import {lotteryReducer} from './lottery/lottery.reducer';
 import cartReducer from './cart/cartSlice';
 import productReducer from './product/productSlice';
+import categoryReducer from './category/categorySlice';
 
 const persistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   sale: saleReducer,
   lottery: lotteryReducer,
+  category: categoryReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

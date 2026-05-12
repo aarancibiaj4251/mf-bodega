@@ -5,9 +5,9 @@ import "./Collapse.styles.css";
 import RateComponent from '../rate/rate.component';
 import {useSelector} from 'react-redux';
 import {
-  selectAllCategories,
   selectMaxAndMinPriceValue,
 } from '../../redux/product/product.selector';
+import {selectCategories} from '../../redux/category/category.selector';
 
 const { Panel } = Collapse;
 
@@ -20,7 +20,7 @@ interface Props {
 const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProductsCategories}: Props) => {
 
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
-  const allCategories = useSelector(selectAllCategories);
+  const allCategories = useSelector(selectCategories);
   const [categories, setCategories] = useState<CheckboxOptionType[]>(() => {
     return allCategories
       .map(category => ({label: category.name, value: category.id}));

@@ -15,12 +15,13 @@ import {Helpers} from '../../utils/helpers';
 import {useMutation} from '@tanstack/react-query';
 import {getCategories} from '../../data/rest/product.service';
 import {Category} from '../../domain/interfaces/Category';
-import {setCategories} from '../../redux/product/productSlice';
+import {setCategories} from '../../redux/category/categorySlice';
 import ProductsListComponent from '../products/products-list/products-list.component';
 import {useInfiniteScroll} from '../../data/hooks/useInfiniteScroll';
+import {setIsFiltering} from '../../redux/product/productSlice';
 
 const DirectoryComponent = () => {
-  const {onHandleChange, loaded, setPage, lastPage} = useProduct();
+  const {onHandleChange, setPage} = useProduct();
   const products = useSelector(selectAllProducts);
   const [productsInput, setProductsInput] = useState('');
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
@@ -34,7 +35,7 @@ const DirectoryComponent = () => {
     mutationFn: () => getCategories(),
     onSuccess: categories => dispatch(setCategories(categories)),
   });
-  const {} = useInfiniteScroll('footer', () => {setPage(prevState => prevState + 1);});
+  const {} = useInfiniteScroll('footer', () => setPage(prevState => prevState + 1));
 
   const handleFilterSearch = () => {
     setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax, productsCategories}));
@@ -42,11 +43,12 @@ const DirectoryComponent = () => {
 
   useEffect(() => {
     handleFilterSearch();
+    dispatch(setIsFiltering(!!productsInput || productsRangeMin > minPriceValue || productsRangeMax < maxPriceValue || !!productsCategories.length));
   }, [productsInput, productsRangeMin, productsRangeMax, productsCategories]);
 
   useEffect(() => {
     setProductsFiltered(products);
-  }, [loaded]);
+  }, [products]);
 
   useEffect(() => {
     mutate({});

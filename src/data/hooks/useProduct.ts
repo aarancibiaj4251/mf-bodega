@@ -5,28 +5,22 @@ import { CartItem } from '../../domain/interfaces/CartItem';
 import {useDispatch, useSelector} from 'react-redux';
 import {addCartItem, removeCartItem} from '../../redux/cart/cartSlice';
 import {selectAllProducts} from '../../redux/product/product.selector';
-import {setProducts} from '../../redux/product/productSlice';
+import {setIsLoading, setProducts} from '../../redux/product/productSlice';
 
 export const useProduct = () => {
   const products = useSelector(selectAllProducts);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [lastPage, setIsLastPage] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (lastPage) {
-      return;
-    }
-    setLoaded(false);
+    dispatch(setIsLoading(true));
     getProducts(page)
       .then((response: any) => {
         const productsDB = response.content;
-        setIsLastPage(response.last)
-        dispatch(setProducts(productsDB));
+        dispatch(setProducts({products: productsDB, isLastPage: response.last}));
       })
       .catch()
-      .finally(() => setLoaded(true));
+      .finally(() => dispatch(setIsLoading(false)));
   }, [page]);
 
   const onHandleChange = ({product: selectedProduct, count}: onChangeArgs) => {
@@ -50,9 +44,7 @@ export const useProduct = () => {
   return {
     products,
     onHandleChange,
-    loaded,
     page,
     setPage,
-    lastPage,
   }
 }
