@@ -20,6 +20,8 @@ interface Props {
 const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProductsCategories}: Props) => {
 
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
+  const [min, setMin] = useState(minPriceValue);
+  const [max, setMax] = useState(maxPriceValue)
   const allCategories = useSelector(selectCategories);
   const [categories, setCategories] = useState<CheckboxOptionType[]>(() => {
     return allCategories
@@ -29,6 +31,8 @@ const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProduct
   const onChangeSlider = ([rangeMin, rangeMax]) => {
     setProductsRangeMin(rangeMin);
     setProductsRangeMax(rangeMax);
+    setMin(rangeMin);
+    setMax(rangeMax);
   }
 
   const onChange = (categories: string[]) => {
@@ -38,7 +42,12 @@ const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProduct
   useEffect(() => {
     setProductsRangeMin(minPriceValue);
     setProductsRangeMax(maxPriceValue);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setMin(minPriceValue);
+    setMax(maxPriceValue);
+  }, [minPriceValue, maxPriceValue]);
 
   return (
     <Collapse defaultActiveKey={['1', '2', '3']} ghost>
@@ -56,6 +65,7 @@ const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProduct
           min={minPriceValue}
           max={maxPriceValue}
           onChange={onChangeSlider}
+          value={[min, max]}
         />
       </Panel>
     </Collapse>
