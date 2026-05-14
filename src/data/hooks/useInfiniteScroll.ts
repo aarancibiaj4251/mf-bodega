@@ -29,6 +29,7 @@ export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
     const obsOptions = {
       root: null,
       threshold: 1,
+      delay: 100
     };
     const observer = new IntersectionObserver(obsCallback, obsOptions);
     observer.observe(footer);
