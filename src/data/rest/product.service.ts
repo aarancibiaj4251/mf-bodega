@@ -5,6 +5,9 @@ import {Category} from '../../domain/interfaces/Category';
 export const getProducts = (page = 0): Promise<Array<any>> => {
   return new Promise(((resolve, reject) => {
     apiClient.get(`products/page/${page}`, {
+      params: {
+        size: 25,
+      }
     })
       .then(((results) => results.data))
       .then(products => resolve(products))

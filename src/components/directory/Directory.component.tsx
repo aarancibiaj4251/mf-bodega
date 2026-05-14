@@ -19,6 +19,7 @@ import {setCategories} from '../../redux/category/categorySlice';
 import ProductsListComponent from '../products/products-list/products-list.component';
 import {useInfiniteScroll} from '../../data/hooks/useInfiniteScroll';
 import {setIsFiltering} from '../../redux/product/productSlice';
+import ProductLoaderComponent from '../products-loader/ProductLoader.component';
 
 const DirectoryComponent = () => {
   const {onHandleChange, setPage} = useProduct();
@@ -35,7 +36,7 @@ const DirectoryComponent = () => {
     mutationFn: () => getCategories(),
     onSuccess: categories => dispatch(setCategories(categories)),
   });
-  const {} = useInfiniteScroll('footer', () => setPage(prevState => prevState + 1));
+  const {loading} = useInfiniteScroll('footer', () => setPage(prevState => prevState + 1));
 
   const handleFilterSearch = () => {
     setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax, productsCategories}));
@@ -81,6 +82,9 @@ const DirectoryComponent = () => {
             <Row justify={isMobile ? 'center' : 'space-between'}>
               <ProductsListComponent onHandleChange={onHandleChange} products={productsFiltered}/>
             </Row>
+            {
+              loading && <ProductLoaderComponent />
+            }
           </Col>
         </Row>
       </Col>
