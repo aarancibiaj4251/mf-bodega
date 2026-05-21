@@ -1,6 +1,7 @@
 import React from 'react';
 import CollapseComponent from '../collapse/Collapse.component';
 import {Card} from 'antd';
+import "./ProductsFilters.styles.scss";
 
 interface Props {
   setProductsRangeMin: React.Dispatch<React.SetStateAction<number>>;
@@ -10,7 +11,7 @@ interface Props {
 
 const ProductsFiltersComponent = ({setProductsRangeMin, setProductsRangeMax, setProductsCategories}: Props) => {
   return (
-    <Card style={{borderRadius: '10px', position: 'relative'}} bodyStyle={{padding: '8px'}}>
+    <Card className="products-filters" bodyStyle={{padding: '8px'}}>
       <div style={{paddingLeft: '15px'}}>Filters</div>
       <CollapseComponent
         setProductsRangeMin={setProductsRangeMin}
