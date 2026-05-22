@@ -7,6 +7,7 @@ const INITIAL_STATE: ProductState = {
   isLastPage: false,
   isFiltering: false,
   isLoading: false,
+  totalElements: 0,
 }
 
 export const productSlice = createSlice({
@@ -19,6 +20,7 @@ export const productSlice = createSlice({
     setProducts: (state, {payload}) => {
       state.products = [...state.products, ...payload.products];
       state.isLastPage = payload.isLastPage;
+      state.totalElements = payload.totalElements;
     },
     setIsFiltering: (state, {payload}) => {
       state.isFiltering = payload;

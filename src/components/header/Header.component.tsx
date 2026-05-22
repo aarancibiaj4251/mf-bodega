@@ -39,7 +39,7 @@ const HeaderComponent = () => {
 
   return (
     <>
-      <Header className="header flex-no-wrap justify-content-between align-items-center" >
+      <Header id="header" className="header flex-no-wrap justify-content-between align-items-center" >
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
         <div className="header__info">
           { keycloak.authenticated && (<Link to="/informacion" className="color-black">{Helpers.fullName(user)}</Link>)}

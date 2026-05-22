@@ -34,6 +34,7 @@ export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
     const observer = new IntersectionObserver(obsCallback, obsOptions);
     observer.observe(footer);
     return () => {
+      setLoading(false);
       observer.disconnect();
     };
   }, [isLastPage, isFiltering]);

@@ -9,7 +9,7 @@ import ProductsSegmentedComponent from '../products-segmented/ProductsSegmented.
 import ProductsSearchComponent from '../products-search/ProductsSearch.component';
 import {
   selectAllProducts,
-  selectMaxAndMinPriceValue,
+  selectMaxAndMinPriceValue, selectProductState,
 } from '../../redux/product/product.selector';
 import {Helpers} from '../../utils/helpers';
 import {useMutation} from '@tanstack/react-query';
@@ -20,10 +20,13 @@ import ProductsListComponent from '../products/products-list/products-list.compo
 import {useInfiniteScroll} from '../../data/hooks/useInfiniteScroll';
 import {setIsFiltering} from '../../redux/product/productSlice';
 import ProductLoaderComponent from '../products-loader/ProductLoader.component';
+import {useScrollUp} from '../../data/hooks/useScrollUp';
+import ScrollUpButtonComponent from '../scroll-up-button/ScrollUpButton.component';
 
 const DirectoryComponent = () => {
   const {onHandleChange, setPage} = useProduct();
   const products = useSelector(selectAllProducts);
+  const {totalElements} = useSelector(selectProductState);
   const [productsInput, setProductsInput] = useState('');
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
   const [productsRangeMin, setProductsRangeMin] = useState<number>(minPriceValue);
@@ -32,6 +35,7 @@ const DirectoryComponent = () => {
   const [productsFiltered, setProductsFiltered] = useState([]);
   const dispatch = useDispatch();
   const {isMobile} = useWindowsSizeHeight();
+  const {} = useScrollUp();
   const {mutate} = useMutation<Category[], Error, {}>({
     mutationFn: () => getCategories(),
     onSuccess: categories => dispatch(setCategories(categories)),
@@ -81,7 +85,9 @@ const DirectoryComponent = () => {
             </div>
             <Row justify={isMobile ? 'center' : 'space-between'}>
               <ProductsListComponent onHandleChange={onHandleChange} products={productsFiltered}/>
+              <ScrollUpButtonComponent />
             </Row>
+            <h3 className="">Showing {productsFiltered.length} of {totalElements}</h3>
             {
               loading && <ProductLoaderComponent />
             }

@@ -17,7 +17,7 @@ export const useProduct = () => {
     getProducts(page)
       .then((response: any) => {
         const productsDB = response.content;
-        dispatch(setProducts({products: productsDB, isLastPage: response.last}));
+        dispatch(setProducts({products: productsDB, isLastPage: response.last, ...response}));
       })
       .catch()
       .finally(() => dispatch(setIsLoading(false)));

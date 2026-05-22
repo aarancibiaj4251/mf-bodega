@@ -6,4 +6,5 @@ export interface ProductState {
   isLastPage: boolean;
   isFiltering: boolean;
   isLoading: boolean;
+  totalElements: number;
 }
