@@ -24,11 +24,11 @@ import {useScrollUp} from '../../data/hooks/useScrollUp';
 import ScrollUpButtonComponent from '../scroll-up-button/ScrollUpButton.component';
 
 const DirectoryComponent = () => {
-  const {onHandleChange, setPage} = useProduct();
   const products = useSelector(selectAllProducts);
   const {totalElements} = useSelector(selectProductState);
-  const [productsInput, setProductsInput] = useState('');
   const {min: minPriceValue, max: maxPriceValue} = useSelector(selectMaxAndMinPriceValue);
+  const {onHandleChange, setPage} = useProduct();
+  const [productsInput, setProductsInput] = useState('');
   const [productsRangeMin, setProductsRangeMin] = useState<number>(minPriceValue);
   const [productsRangeMax, setProductsRangeMax] = useState<number>(maxPriceValue);
   const [productsCategories, setProductsCategories] = useState<string[]>([]);

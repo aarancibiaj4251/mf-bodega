@@ -4,15 +4,18 @@ import { onChangeArgs } from 'ajas-product-card/src/interfaces/interfaces';
 import { CartItem } from '../../domain/interfaces/CartItem';
 import {useDispatch, useSelector} from 'react-redux';
 import {addCartItem, removeCartItem} from '../../redux/cart/cartSlice';
-import {selectAllProducts} from '../../redux/product/product.selector';
+import {selectProductState} from '../../redux/product/product.selector';
 import {setIsLoading, setProducts} from '../../redux/product/productSlice';
 
 export const useProduct = () => {
-  const products = useSelector(selectAllProducts);
+  const {isLastPage, products} = useSelector(selectProductState);
   const [page, setPage] = useState<number>(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (isLastPage) {
+      return;
+    }
     dispatch(setIsLoading(true));
     getProducts(page)
       .then((response: any) => {
