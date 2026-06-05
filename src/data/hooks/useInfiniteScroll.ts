@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {selectProductState} from '../../redux/product/product.selector';
+import {setIsLoading} from '../../redux/product/productSlice';
 
 export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
   const [error, setError] = useState('');
-  const {isLastPage, isFiltering} = useSelector(selectProductState);
-  const [loading, setLoading] = useState(false);
+  const {isLastPage, isFiltering, isLoading} = useSelector(selectProductState);
   useEffect(() => {
     const footer = document.getElementById(elementRef);
     if (!footer) {
@@ -15,32 +15,32 @@ export const useInfiniteScroll = (elementRef: string, resolve: () => void) => {
     const obsCallback = function (entries: IntersectionObserverEntry[], observer: IntersectionObserver){
       const [entry] = entries;
       if (entry.intersectionRatio === 0) {
-        setLoading(false);
+        setIsLoading(false);
       }
       if (isLastPage) {
-        setLoading(false);
+        setIsLoading(false);
         observer.unobserve(footer);
       }
       if (entry.isIntersecting && !isFiltering) {
-        setLoading(true);
+        setIsLoading(true);
         resolve();
       }
     }
     const obsOptions = {
       root: null,
-      threshold: 1,
-      delay: 100
+      threshold: 0.1,
+      delay: 500
     };
     const observer = new IntersectionObserver(obsCallback, obsOptions);
     observer.observe(footer);
     return () => {
-      setLoading(false);
+      setIsLoading(false);
       observer.disconnect();
     };
   }, [isLastPage, isFiltering]);
 
   return {
     error,
-    loading
+    isLoading
   };
 }

@@ -40,7 +40,7 @@ const DirectoryComponent = () => {
     mutationFn: () => getCategories(),
     onSuccess: categories => dispatch(setCategories(categories)),
   });
-  const {loading} = useInfiniteScroll('footer', () => setPage(prevState => prevState + 1));
+  const {isLoading: loading} = useInfiniteScroll('footer', () => setPage(prevState => prevState + 1));
 
   const handleFilterSearch = () => {
     setProductsFiltered(() => Helpers.filterProducts(products, {productsInput, productsRangeMin, productsRangeMax, productsCategories}));
