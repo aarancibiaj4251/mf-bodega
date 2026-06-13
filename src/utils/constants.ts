@@ -1,14 +1,16 @@
-import {AreaChartOutlined, EditOutlined, HomeOutlined, ShoppingOutlined, HistoryOutlined} from '@ant-design/icons';
+import {AreaChartOutlined, EditOutlined, HomeOutlined, ShoppingOutlined, HistoryOutlined, UserOutlined} from '@ant-design/icons';
 
 export class Constants {
   public static URL_MS_1 = process.env.REACT_APP_API_URL_MS;
   public static URL_PAYPAL_V1 = process.env.REACT_APP_API_URL_PAYPAL;
+  public static KEYCLOAK_URL = process.env.KEYCLOAK_URL;
+  public static KEYCLOAK_REALM = process.env.KEYCLOAK_REALM;
 
   public static ICONS = Object.create(
     {
       'HomeOutlined': HomeOutlined, 'ShoppingOutlined': ShoppingOutlined,
       'AreaChartOutlined': AreaChartOutlined, 'EditOutlined': EditOutlined,
-      'HistoryOutlined': HistoryOutlined,
+      'HistoryOutlined': HistoryOutlined, 'UserOutlined': UserOutlined,
     },
   );
 

@@ -9,6 +9,7 @@ import UserInformation from '../components/user/user-information/user-informatio
 import LotteryPage from '../pages/lottery/Lottery.component';
 import SignInSignOutPage from '../pages/sign-in-sign-out/SignInSignOut.component';
 import App from '../App';
+import UsersPageComponent from '../pages/users/UsersPage.component';
 
 const routes = createBrowserRouter([
     {
@@ -20,6 +21,7 @@ const routes = createBrowserRouter([
         {path: '/productos', element: <ProductList />},
         {path: '/informacion', element: <UserInformation />},
         {path: '/sorteo', element: <LotteryPage />},
+        {path: '/users', element: <UsersPageComponent />},
       ]
     },
     {path: '/login', element: <SignInSignOutPage />},

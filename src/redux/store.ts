@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: () => new Tuple(sagaMiddleware),
+  middleware: () => new Tuple(sagaMiddleware, logger),
 });
 
 export const persistor = persistStore(store);

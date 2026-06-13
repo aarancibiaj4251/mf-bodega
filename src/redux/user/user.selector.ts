@@ -7,3 +7,13 @@ export const selectCurrentUser = createSelector(
   [selectUser],
   state => state.currentUser,
 )
+
+export const selectKeyCloakUsers = createSelector(
+  [selectUser],
+  state => state.users,
+)
+
+export const selectUserProfile = createSelector(
+  [selectUser],
+  state => state.userProfile,
+)

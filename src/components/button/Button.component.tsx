@@ -1,19 +1,21 @@
 import React from 'react';
 import {Button} from 'antd';
 import {SizeType} from 'antd/lib/config-provider/SizeContext';
-import {ButtonShape, ButtonType} from 'antd/lib/button/button';
+import {ButtonHTMLType, ButtonShape, ButtonType} from 'antd/lib/button/button';
 
 interface ButtonProps {
   id: string;
   type: ButtonType;
   size: SizeType;
   onClick: () => void;
+  children: React.ReactNode;
+  htmlType?: ButtonHTMLType;
   shape?: ButtonShape;
   icon?: React.ReactNode;
   className?: string;
 }
 
-const ButtonComponent = ({id, shape, className, type, size, icon, onClick}: ButtonProps) => {
+const ButtonComponent = ({id, shape, className, type, size, children, htmlType, icon, onClick}: ButtonProps) => {
   return (
     <Button
       id={id}
@@ -23,7 +25,9 @@ const ButtonComponent = ({id, shape, className, type, size, icon, onClick}: Butt
       size={size}
       icon={icon}
       onClick={onClick}
+      htmlType={htmlType}
     >
+      {children}
     </Button>
   );
 };

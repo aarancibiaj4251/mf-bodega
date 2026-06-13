@@ -1,0 +1,15 @@
+.users-page {
+  column-gap: 20px;
+  padding: 20px;
+
+  & > div {
+
+    &:nth-child(1) {
+      flex-grow: 1;
+    }
+
+    &:nth-child(2) {
+      flex-grow: 5;
+    }
+  }
+}

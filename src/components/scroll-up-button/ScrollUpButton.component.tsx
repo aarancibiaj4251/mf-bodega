@@ -17,7 +17,7 @@ const ScrollUpButtonComponent = () => {
       size="large"
       icon={<UpCircleOutlined />}
       onClick={handleScrollUpButton}
-    />
+    >{}</ButtonComponent>
   );
 };
 

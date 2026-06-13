@@ -2,8 +2,9 @@ import {UserState} from './user-state.interface';
 import {createSlice} from '@reduxjs/toolkit';
 
 const INITIAL_STATE: UserState = {
-  // @ts-ignore
   currentUser: null,
+  users: [],
+  userProfile: null,
 }
 
 export const userSlice = createSlice({
@@ -11,7 +12,6 @@ export const userSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     logout: (state: UserState) => {
-      // @ts-ignore
       state.currentUser = null;
       localStorage.clear();
     },
@@ -23,10 +23,16 @@ export const userSlice = createSlice({
         ...state.currentUser,
         profiles: action.payload,
       };
-    }
+    },
+    setUsers: (state: UserState, action) => {
+      state.users = action.payload;
+    },
+    setUserProfile: (state: UserState, action) => {
+      state.userProfile = action.payload ? state.users.find(user => user.id === action.payload.id) : null;
+    },
   },
 });
 
-export const {logout, login, setProfiles} = userSlice.actions;
+export const {logout, login, setProfiles, setUsers, setUserProfile} = userSlice.actions;
 
 export default userSlice.reducer;
