@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile, setUsers} from '../../redux/user/userSlice';
 import {
   selectKeyCloakUsers,
-  selectUserProfile,
+  selectUserProperties,
 } from '../../redux/user/user.selector';
 import UsersListComponent from '../../components/users-list/UsersList.component';
 import UsersRegisterFormComponent from '../../components/users-register-form/UsersRegisterForm.component';
@@ -15,7 +15,7 @@ import UserProfileComponent from '../../components/user-profile/UserProfile.comp
 import {UserAddOutlined} from '@ant-design/icons';
 
 const UsersPageComponent = () => {
-  const userProfile = useSelector(selectUserProfile);
+  const {profile} = useSelector(selectUserProperties);
   const dispatch = useDispatch();
   const users = useSelector(selectKeyCloakUsers);
 
@@ -56,8 +56,8 @@ const UsersPageComponent = () => {
       <div>
         <Card>
           {
-            userProfile ? (
-              <UserProfileComponent user={userProfile}/>
+            profile ? (
+              <UserProfileComponent key={profile.id} user={profile}/>
             ) : <UsersRegisterFormComponent/>
           }
         </Card>

@@ -33,3 +33,39 @@ export const createUserKeycloak = (formDto: KeycloakUserFormDto): Promise<Keyclo
       .catch(e => reject(e))
   }));
 }
+
+export const deleteUserKeycloak = (userId: string): Promise<void> => {
+  return new Promise(((resolve, reject) => {
+    apiClient.delete(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users/${userId}`)
+      .then(((results) => results.data))
+      .then(products => resolve(products))
+      .catch(e => reject(e))
+  }));
+}
+
+export const removeUserSessions = (userId: string): Promise<void> => {
+  return new Promise(((resolve, reject) => {
+    apiClient.post(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users/${userId}/logout`)
+      .then(((results) => results.data))
+      .then(products => resolve(products))
+      .catch(e => reject(e))
+  }));
+}
+
+export const getUserSessions = (userId: string): Promise<Array<any>> => {
+  return new Promise(((resolve, reject) => {
+    apiClient.get(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users/${userId}/sessions`)
+      .then(((results) => results.data))
+      .then(products => resolve(products))
+      .catch(e => reject(e))
+  }));
+}
+
+export const getUserRoles = (userId: string): Promise<{realmMappings: Array<any>}> => {
+  return new Promise(((resolve, reject) => {
+    apiClient.get(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users/${userId}/role-mappings`)
+      .then(((results) => results.data))
+      .then(products => resolve(products))
+      .catch(e => reject(e))
+  }));
+}

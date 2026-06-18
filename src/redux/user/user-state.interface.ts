@@ -4,5 +4,28 @@ import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 export interface UserState {
   currentUser: User;
   users: KeycloakUser[];
-  userProfile: KeycloakUser;
+  user: UserProperties;
+}
+
+export interface UserProperties {
+  profile: KeycloakUser;
+  sessions: UserSessions[];
+  roles: UserRole[];
+}
+
+interface UserRole {
+  id: string;
+  name: string;
+  description: string;
+}
+
+interface UserSessions {
+  id: string;
+  username: string;
+  userId: string;
+  ipAddress: string;
+  start: number;
+  lastAccess: number;
+  rememberMe: boolean;
+  transientUser: boolean;
 }

@@ -6,6 +6,10 @@ export const validationSchema = yup.object({
     .email('Enter a valid email')
     .min(5)
     .required('Email is required'),
+  username: yup
+    .string()
+    .min(5)
+    .required('Username is required'),
   password: yup
     .string()
     .min(8, 'Password should be of minimum 8 characters length')

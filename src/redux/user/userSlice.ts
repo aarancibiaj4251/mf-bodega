@@ -4,7 +4,11 @@ import {createSlice} from '@reduxjs/toolkit';
 const INITIAL_STATE: UserState = {
   currentUser: null,
   users: [],
-  userProfile: null,
+  user: {
+    profile: null,
+    sessions: [],
+    roles: [],
+  },
 }
 
 export const userSlice = createSlice({
@@ -28,11 +32,20 @@ export const userSlice = createSlice({
       state.users = action.payload;
     },
     setUserProfile: (state: UserState, action) => {
-      state.userProfile = action.payload ? state.users.find(user => user.id === action.payload.id) : null;
+      state.user.profile = action.payload ? state.users.find(user => user.id === action.payload.id) : null;
     },
+    setUserSessions: (state: UserState, action) => {
+      state.user.sessions = action.payload;
+    },
+    setUserRoles: (state: UserState, action) => {
+      state.user.roles = action.payload;
+    },
+    deleteUser: (state: UserState, action) => {
+      state.users = state.users.filter(user => user.id !== action.payload);
+    }
   },
 });
 
-export const {logout, login, setProfiles, setUsers, setUserProfile} = userSlice.actions;
+export const {logout, login, setProfiles, setUsers, setUserProfile, deleteUser, setUserSessions, setUserRoles} = userSlice.actions;
 
 export default userSlice.reducer;

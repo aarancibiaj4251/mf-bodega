@@ -13,7 +13,7 @@ export const selectKeyCloakUsers = createSelector(
   state => state.users,
 )
 
-export const selectUserProfile = createSelector(
+export const selectUserProperties = createSelector(
   [selectUser],
-  state => state.userProfile,
+  state => state.user,
 )

@@ -6,6 +6,7 @@ import {NavLink} from 'react-router-dom';
 import {Profile} from '../domain/model/Profile';
 import {Constants} from './constants';
 import {Product} from '../domain/interfaces/Product';
+import keycloak from '../config/auth/keycloak.config';
 
 
 export class Helpers {
@@ -43,4 +44,13 @@ export class Helpers {
         return products.filter(product => product.unitPrice <= filters.productsRangeMax && product.unitPrice >= filters.productsRangeMin);
     }
 
+    public static userRoles() {
+        return keycloak
+          .realmAccess
+          .roles
+          .filter(
+            (role: string) => !["default-roles-portfoliodev", "offline_access", "uma_authorization"]
+              .includes(role)
+          );
+    }
 }

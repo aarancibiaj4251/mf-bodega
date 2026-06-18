@@ -1,21 +1,26 @@
 import React from 'react';
 import {Avatar, List, Typography} from 'antd';
 import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
-import {setUserProfile} from '../../redux/user/userSlice';
+import {setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectUserProfile} from '../../redux/user/user.selector';
+import {selectUserProperties} from '../../redux/user/user.selector';
 const { Text } = Typography;
 import './UsersListItem.component.scss';
+import {getUserRoles, getUserSessions} from '../../data/rest/keycloak/users.service';
 
 interface Props {
   user: KeycloakUser;
 }
 
 const UsersListItemComponent = ({user}: Props) => {
-  const profile = useSelector(selectUserProfile);
+  const {profile} = useSelector(selectUserProperties);
   const dispatch = useDispatch();
-  const handleClick = (id: string) => {
+  const handleClick = async (id: string) => {
     dispatch(setUserProfile({id}));
+    const sessions = await getUserSessions(user.id);
+    const {realmMappings} = await getUserRoles(user.id);
+    dispatch(setUserSessions(sessions));
+    dispatch(setUserRoles(realmMappings));
   }
 
   return (

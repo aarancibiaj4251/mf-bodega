@@ -15,6 +15,7 @@ import {login as loginSlice, setProfiles} from './redux/user/userSlice';
 import {userInformation} from './data/rest/user.service';
 import {register} from './data/rest/auth/auth.service';
 import {getGeneralProfiles, getProfiles} from './data/rest/profiles.service';
+import {Helpers} from './utils/helpers';
 
 const App = () => {
   const loader = useSelector(selectLoader);
@@ -29,13 +30,7 @@ const App = () => {
       return;
     }
     const userProfile = await keycloak.loadUserProfile();
-    const hasRole = keycloak
-      .realmAccess
-      .roles
-      .filter(
-        (role: string) => !["default-roles-portfoliodev", "offline_access", "uma_authorization"]
-          .includes(role)
-      )
+    const hasRole = Helpers.userRoles()
       .length > 0;
     const user = {
       email: userProfile.email,
@@ -83,7 +78,7 @@ const App = () => {
       if (!kcInitialized) {
         keycloak.init({
           pkceMethod: 'S256',
-          redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL,
+          redirectUri: window.location.origin + window.location.pathname,
           onLoad: 'check-sso',
         })
           .then()

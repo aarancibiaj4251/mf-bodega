@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {UserOutlined} from '@ant-design/icons';
-import {Input} from 'antd';
+import {InfoCircleOutlined, UserOutlined} from '@ant-design/icons';
+import {Input, Tooltip} from 'antd';
 import ButtonComponent from '../button/Button.component';
 import './UsersRegisterForm.component.scss';
 import {validationSchema} from '../../domain/formik-validations/userRegisterForm';
@@ -10,10 +10,10 @@ import {createUserKeycloak} from '../../data/rest/keycloak/users.service';
 import {KeycloakUserFormDto} from '../../data/dto/KeycloakUserForm.dto';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile} from '../../redux/user/userSlice';
-import {selectKeyCloakUsers, selectUserProfile} from '../../redux/user/user.selector';
+import {selectKeyCloakUsers, selectUserProperties} from '../../redux/user/user.selector';
 
 const UsersRegisterFormComponent = () => {
-  const profile = useSelector(selectUserProfile);
+  const {profile} = useSelector(selectUserProperties);
   const user = useSelector(selectKeyCloakUsers)[0];
   const dispatch = useDispatch();
   const {mutate} = useMutation({
@@ -48,31 +48,60 @@ const UsersRegisterFormComponent = () => {
           placeholder="Email" prefix={<UserOutlined/>}
           type="text"
           onChange={userRegisterForm.handleChange}
+          onBlur={userRegisterForm.handleBlur}
           value={userRegisterForm.values.email}
           name="email"
+          status={userRegisterForm.errors.email && userRegisterForm.touched.email ? 'error': null}
+          suffix={userRegisterForm.errors.email && userRegisterForm.touched.email &&
+            <Tooltip title={userRegisterForm.errors.email}>
+              <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+            </Tooltip>
+          }
         />
         <Input
           placeholder="Username" prefix={<UserOutlined/>}
           type="text"
           onChange={userRegisterForm.handleChange}
+          onBlur={userRegisterForm.handleBlur}
           value={userRegisterForm.values.username}
           name="username"
+          status={userRegisterForm.errors.username && userRegisterForm.touched.username ? 'error': null}
+          suffix={userRegisterForm.errors.username && userRegisterForm.touched.username &&
+              <Tooltip title={userRegisterForm.errors.username}>
+                  <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+              </Tooltip>
+          }
         />
         <Input placeholder="Password" prefix={<UserOutlined/>}
                type="text"
                onChange={userRegisterForm.handleChange}
+               onBlur={userRegisterForm.handleBlur}
                value={userRegisterForm.values.password}
                name="password"
+               status={userRegisterForm.errors.password && userRegisterForm.touched.password ? 'error': null}
+               suffix={userRegisterForm.errors.password && userRegisterForm.touched.password &&
+                   <Tooltip title={userRegisterForm.errors.password}>
+                       <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                   </Tooltip>
+               }
         />
         <Input placeholder="Confirm password" prefix={<UserOutlined/>}
                type="text"
                onChange={userRegisterForm.handleChange}
+               onBlur={userRegisterForm.handleBlur}
                value={userRegisterForm.values.password_confirmation}
                name="password_confirmation"
+               status={userRegisterForm.errors.password_confirmation && userRegisterForm.touched.password_confirmation ? 'error': null}
+               suffix={userRegisterForm.errors.password_confirmation && userRegisterForm.touched.password_confirmation &&
+                   <Tooltip title={userRegisterForm.errors.password_confirmation}>
+                       <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                   </Tooltip>
+               }
         />
         <ButtonComponent
           id="users-register-button"
           type="primary"
+          disabled={!userRegisterForm.isValid}
           onClick={userRegisterForm.handleSubmit}
           size="large"
           htmlType="submit"

@@ -13,9 +13,10 @@ interface ButtonProps {
   shape?: ButtonShape;
   icon?: React.ReactNode;
   className?: string;
+  disabled?: boolean;
 }
 
-const ButtonComponent = ({id, shape, className, type, size, children, htmlType, icon, onClick}: ButtonProps) => {
+const ButtonComponent = ({id, shape, className, type, size, children, htmlType, icon, onClick, disabled}: ButtonProps) => {
   return (
     <Button
       id={id}
@@ -26,6 +27,7 @@ const ButtonComponent = ({id, shape, className, type, size, children, htmlType, 
       icon={icon}
       onClick={onClick}
       htmlType={htmlType}
+      disabled={disabled}
     >
       {children}
     </Button>
