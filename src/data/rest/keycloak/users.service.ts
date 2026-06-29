@@ -6,7 +6,7 @@ import {KeycloakUserFormDto} from '../../dto/KeycloakUserForm.dto';
 
 export const getUsersKeycloak = (): Promise<Array<KeycloakUser>> => {
   return new Promise(((resolve, reject) => {
-    apiClient.get(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users`, {})
+    apiClient.get(`${Constants.URL_MS_1}user/keycloak`, {})
       .then(((results) => results.data))
       .then(products => resolve(products))
       .catch(e => reject(e))
@@ -36,7 +36,7 @@ export const createUserKeycloak = (formDto: KeycloakUserFormDto): Promise<Keyclo
 
 export const deleteUserKeycloak = (userId: string): Promise<void> => {
   return new Promise(((resolve, reject) => {
-    apiClient.delete(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users/${userId}`)
+    apiClient.delete(`${Constants.URL_MS_1}user/${userId}/delete`)
       .then(((results) => results.data))
       .then(products => resolve(products))
       .catch(e => reject(e))

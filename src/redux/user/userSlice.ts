@@ -9,6 +9,7 @@ const INITIAL_STATE: UserState = {
     sessions: [],
     roles: [],
   },
+  loader: false,
 }
 
 export const userSlice = createSlice({
@@ -42,10 +43,13 @@ export const userSlice = createSlice({
     },
     deleteUser: (state: UserState, action) => {
       state.users = state.users.filter(user => user.id !== action.payload);
+    },
+    setUserLoader: (state: UserState, action) => {
+      state.loader = action.payload;
     }
   },
 });
 
-export const {logout, login, setProfiles, setUsers, setUserProfile, deleteUser, setUserSessions, setUserRoles} = userSlice.actions;
+export const {logout, login, setProfiles, setUsers, setUserProfile, deleteUser, setUserSessions, setUserRoles, setUserLoader} = userSlice.actions;
 
 export default userSlice.reducer;

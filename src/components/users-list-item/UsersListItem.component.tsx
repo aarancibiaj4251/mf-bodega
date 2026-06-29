@@ -1,7 +1,7 @@
 import React from 'react';
 import {Avatar, List, Typography} from 'antd';
 import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
-import {setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
+import {setUserLoader, setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserProperties} from '../../redux/user/user.selector';
 const { Text } = Typography;
@@ -17,10 +17,12 @@ const UsersListItemComponent = ({user}: Props) => {
   const dispatch = useDispatch();
   const handleClick = async (id: string) => {
     dispatch(setUserProfile({id}));
+    dispatch(setUserLoader(true));
     const sessions = await getUserSessions(user.id);
     const {realmMappings} = await getUserRoles(user.id);
     dispatch(setUserSessions(sessions));
     dispatch(setUserRoles(realmMappings));
+    dispatch(setUserLoader(false));
   }
 
   return (
@@ -32,7 +34,7 @@ const UsersListItemComponent = ({user}: Props) => {
         title={<a href="https://ant.design">{user.username}</a>}
         description={user.firstName + ' ' + user.lastName}
       />
-      <div>{user.email} {user.enabled ? <Text type="success"> Active</Text>: <Text>Inactive</Text>}</div>
+      <div>{user.email} {user.emailVerified ? <Text type="success"> Email verified</Text>: <Text type="danger">Email not verified</Text>}</div>
     </List.Item>
   );
 };

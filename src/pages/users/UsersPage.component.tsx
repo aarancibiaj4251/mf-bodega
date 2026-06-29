@@ -31,13 +31,13 @@ const UsersPageComponent = () => {
   }, [])
 
   return (
-    <div className="users-page flex-nowrap justify-content-start">
-      <div>
+    <div className="users-page flex-wrap justify-content-start gap-10">
+      <div style={{flex: 8}}>
         <Card>
           <div className="users-page--header flex-nowrap justify-content-between align-items-center">
             <div className="users-page--header-description flex-column">
               <h2>Users</h2>
-              <h3>All users need to be verified before you can send email and set a project.</h3>
+              <h3>All users need to be verified before you can send email.</h3>
             </div>
             <div className="users-page--header-lastModified">
               Last modification: 2:10 pm - 12.06.2014
@@ -53,7 +53,7 @@ const UsersPageComponent = () => {
           <UsersListComponent users={users}></UsersListComponent>
         </Card>
       </div>
-      <div>
+      <div style={{flex: 6}}>
         <Card>
           {
             profile ? (

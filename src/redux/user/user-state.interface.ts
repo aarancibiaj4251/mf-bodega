@@ -5,6 +5,7 @@ export interface UserState {
   currentUser: User;
   users: KeycloakUser[];
   user: UserProperties;
+  loader: boolean;
 }
 
 export interface UserProperties {
@@ -13,13 +14,13 @@ export interface UserProperties {
   roles: UserRole[];
 }
 
-interface UserRole {
+export interface UserRole {
   id: string;
   name: string;
   description: string;
 }
 
-interface UserSessions {
+export interface UserSessions {
   id: string;
   username: string;
   userId: string;

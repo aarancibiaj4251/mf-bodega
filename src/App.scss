@@ -179,6 +179,10 @@ nav li a {
   cursor: pointer;
 }
 
+.cursor-disabled {
+  cursor: not-allowed;
+}
+
 .pt-10 {
   padding-top: 10px;
 }

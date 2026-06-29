@@ -17,3 +17,8 @@ export const selectUserProperties = createSelector(
   [selectUser],
   state => state.user,
 )
+
+export const selectUserLoader = createSelector(
+  [selectUser],
+  state => state.loader,
+)
