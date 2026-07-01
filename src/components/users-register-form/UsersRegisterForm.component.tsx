@@ -11,21 +11,22 @@ import {KeycloakUserFormDto} from '../../data/dto/KeycloakUserForm.dto';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile} from '../../redux/user/userSlice';
 import {selectKeyCloakUsers, selectUserProperties} from '../../redux/user/user.selector';
+import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 
 const UsersRegisterFormComponent = () => {
   const {profile} = useSelector(selectUserProperties);
   const user = useSelector(selectKeyCloakUsers)[0];
   const dispatch = useDispatch();
-  const {mutate} = useMutation({
+  const {mutate} = useMutation<KeycloakUser, Error, Partial<KeycloakUserFormDto>>({
     mutationFn: createUserKeycloak,
     onSuccess: (users) => userRegisterForm.resetForm(),
   });
-  const userRegisterForm = useFormik<KeycloakUserFormDto>({
+  const userRegisterForm = useFormik<Partial<KeycloakUserFormDto>>({
     initialValues: {
       email: 'foobar@gmail.com',
       username: 'foobar',
-      password: 'foobar',
-      password_confirmation: 'foobar',
+      firstName: 'foobar',
+      lastName: 'foobar',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -34,10 +35,10 @@ const UsersRegisterFormComponent = () => {
   });
   useEffect(() => {
     userRegisterForm.resetForm({values: {
-        email: profile?.email,
-        username: profile?.username,
-        password: 'foobar',
-        password_confirmation: 'foobar',
+        email: '',
+        username: '',
+        firstName: '',
+        lastName: '',
       }});
   }, [profile]);
   return (
@@ -72,31 +73,33 @@ const UsersRegisterFormComponent = () => {
               </Tooltip>
           }
         />
-        <Input placeholder="Password" prefix={<UserOutlined/>}
-               type="text"
-               onChange={userRegisterForm.handleChange}
-               onBlur={userRegisterForm.handleBlur}
-               value={userRegisterForm.values.password}
-               name="password"
-               status={userRegisterForm.errors.password && userRegisterForm.touched.password ? 'error': null}
-               suffix={userRegisterForm.errors.password && userRegisterForm.touched.password &&
-                   <Tooltip title={userRegisterForm.errors.password}>
-                       <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                   </Tooltip>
-               }
+        <Input
+          placeholder="First name" prefix={<UserOutlined/>}
+          type="text"
+          onChange={userRegisterForm.handleChange}
+          onBlur={userRegisterForm.handleBlur}
+          value={userRegisterForm.values.firstName}
+          name="firstName"
+          status={userRegisterForm.errors.firstName && userRegisterForm.touched.firstName ? 'error': null}
+          suffix={userRegisterForm.errors.firstName && userRegisterForm.touched.firstName &&
+              <Tooltip title={userRegisterForm.errors.firstName}>
+                  <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+              </Tooltip>
+          }
         />
-        <Input placeholder="Confirm password" prefix={<UserOutlined/>}
-               type="text"
-               onChange={userRegisterForm.handleChange}
-               onBlur={userRegisterForm.handleBlur}
-               value={userRegisterForm.values.password_confirmation}
-               name="password_confirmation"
-               status={userRegisterForm.errors.password_confirmation && userRegisterForm.touched.password_confirmation ? 'error': null}
-               suffix={userRegisterForm.errors.password_confirmation && userRegisterForm.touched.password_confirmation &&
-                   <Tooltip title={userRegisterForm.errors.password_confirmation}>
-                       <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                   </Tooltip>
-               }
+        <Input
+          placeholder="Last name" prefix={<UserOutlined/>}
+          type="text"
+          onChange={userRegisterForm.handleChange}
+          onBlur={userRegisterForm.handleBlur}
+          value={userRegisterForm.values.lastName}
+          name="lastName"
+          status={userRegisterForm.errors.lastName && userRegisterForm.touched.lastName ? 'error': null}
+          suffix={userRegisterForm.errors.lastName && userRegisterForm.touched.lastName &&
+              <Tooltip title={userRegisterForm.errors.lastName}>
+                  <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+              </Tooltip>
+          }
         />
         <ButtonComponent
           id="users-register-button"

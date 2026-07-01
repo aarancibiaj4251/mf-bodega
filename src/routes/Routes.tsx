@@ -10,6 +10,7 @@ import LotteryPage from '../pages/lottery/Lottery.component';
 import SignInSignOutPage from '../pages/sign-in-sign-out/SignInSignOut.component';
 import App from '../App';
 import UsersPageComponent from '../pages/users/UsersPage.component';
+import NoAuthorizedPage from '../pages/no-authorized/NoAuthorizedPage';
 
 const routes = createBrowserRouter([
     {
@@ -22,6 +23,7 @@ const routes = createBrowserRouter([
         {path: '/informacion', element: <UserInformation />},
         {path: '/sorteo', element: <LotteryPage />},
         {path: '/users', element: <UsersPageComponent />},
+        {path: '/noAuthorized', element: <NoAuthorizedPage />},
       ]
     },
     {path: '/login', element: <SignInSignOutPage />},

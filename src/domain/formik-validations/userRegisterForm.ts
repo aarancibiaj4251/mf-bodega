@@ -10,12 +10,12 @@ export const validationSchema = yup.object({
     .string()
     .min(5)
     .required('Username is required'),
-  password: yup
+  firstName: yup
     .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-  password_confirmation: yup
+    .min(5)
+    .required('First name is required'),
+  lastName: yup
     .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
+    .min(5)
+    .required('Last name is required'),
 });

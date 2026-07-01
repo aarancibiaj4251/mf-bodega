@@ -17,14 +17,9 @@ export const createUserKeycloak = (formDto: KeycloakUserFormDto): Promise<Keyclo
   const request = {
     email: formDto.email,
     username: formDto.username,
+    firstName: formDto.firstName,
+    lastName: formDto.lastName,
     enabled: true,
-    credentials: [
-      {
-        type: "password",
-        value: formDto.password,
-        temporary: false
-      }
-    ],
   } as KeycloakUserRequest;
   return new Promise(((resolve, reject) => {
     apiClient.post(`${Constants.KEYCLOAK_URL}/admin/realms/${Constants.KEYCLOAK_REALM}/users`, request)
