@@ -7,7 +7,6 @@ import ReportPage from '../pages/report/Report.component';
 import ProductList from '../pages/products/list-products/ProductList.component';
 import UserInformation from '../components/user/user-information/user-information.component';
 import LotteryPage from '../pages/lottery/Lottery.component';
-import SignInSignOutPage from '../pages/sign-in-sign-out/SignInSignOut.component';
 import App from '../App';
 import UsersPageComponent from '../pages/users/UsersPage.component';
 import NoAuthorizedPage from '../pages/no-authorized/NoAuthorizedPage';
@@ -30,7 +29,6 @@ const routes = createBrowserRouter([
         {path: '/no-authorized', element: <NoAuthorizedPage />},
       ]
     },
-    {path: '/login', element: <SignInSignOutPage />},
     {path: '/*', element: <div>Pagina no encontrada</div>},
   ], {basename: '/bodega-project'});
 
