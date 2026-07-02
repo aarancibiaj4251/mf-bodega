@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.scss';
 import Spinner from "./components/spinner/Spinner.component";
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,74 +20,56 @@ import {Helpers} from './utils/helpers';
 const App = () => {
   const loader = useSelector(selectLoader);
   const dispatch = useDispatch();
-  const [kcInitialized, setKcInitialized] = useState(false);
 
-  keycloak.onReady = async(authenticated: boolean) => {
-    let profiles: Profile[] = [];
-    if (!authenticated) {
-      profiles = await getGeneralProfiles();
-      dispatch(setProfiles(profiles));
-      return;
-    }
-    const userProfile = await keycloak.loadUserProfile();
-    const hasRole = Helpers.userRoles()
-      .length > 0;
-    const user = {
-      email: userProfile.email,
-      givenName: userProfile.firstName,
-      lastName: userProfile.lastName,
-      username: userProfile.email,
-      isGoogleAccount: false,
-      profiles: [],
-      hasRole,
-    } as User;
-    userInformation(user.email)
-      .then(async userInfo => {
-        userInfo.hasRole = hasRole;
-        user.id = userInfo.id;
-        dispatch(loginSlice(userInfo));
-        if (user.hasRole) {
-          getProfiles(user)
-            .then(userProfiles => {
-              profiles = userProfiles;
-              dispatch(setProfiles(profiles));
-            })
-            .catch(async _ => {
+  useEffect(() => {
+    if (!keycloak.authenticated) {
+      getGeneralProfiles()
+        .then(profiles => dispatch(setProfiles(profiles)));
+    } else {
+      let profiles: Profile[] = [];
+      const userProfile = keycloak.profile;
+      const hasRole = Helpers.userRoles().length > 0;
+      const user = {
+        email: userProfile.email,
+        givenName: userProfile.firstName,
+        lastName: userProfile.lastName,
+        username: userProfile.email,
+        isGoogleAccount: false,
+        profiles: [],
+        hasRole,
+      } as User;
+      userInformation(user.email)
+        .then(async userInfo => {
+          userInfo.hasRole = hasRole;
+          user.id = userInfo.id;
+          dispatch(loginSlice(userInfo));
+          if (user.hasRole) {
+            getProfiles(user)
+              .then(userProfiles => {
+                profiles = userProfiles;
+                dispatch(setProfiles(profiles));
+              })
+              .catch(async _ => {
+                profiles = await getGeneralProfiles();
+                dispatch(setProfiles(profiles));
+              });
+          } else {
+            profiles = await getGeneralProfiles();
+            dispatch(setProfiles(profiles));
+          }
+        })
+        .catch(async () => {
+          dispatch(loginSlice(user))
+          register(user)
+            .then()
+            .catch()
+            .finally(async () => {
               profiles = await getGeneralProfiles();
               dispatch(setProfiles(profiles));
             });
-        } else {
-          profiles = await getGeneralProfiles();
-          dispatch(setProfiles(profiles));
-        }
-      })
-      .catch(async () => {
-        dispatch(loginSlice(user))
-        register(user)
-          .then()
-          .catch()
-          .finally(async () => {
-            profiles = await getGeneralProfiles();
-            dispatch(setProfiles(profiles));
-          });
-      });
-  }
-
-  useEffect(() => {
-    const initKeycloak = () => {
-      if (!kcInitialized) {
-        keycloak.init({
-          pkceMethod: 'S256',
-          redirectUri: window.location.origin + window.location.pathname,
-          onLoad: 'check-sso',
-        })
-          .then()
-          .catch(err => console.log('init error', err));
-        setKcInitialized(true);
-      }
-    };
-    initKeycloak();
-  }, [kcInitialized]);
+        });
+    }
+  }, []);
 
   return (
       <>

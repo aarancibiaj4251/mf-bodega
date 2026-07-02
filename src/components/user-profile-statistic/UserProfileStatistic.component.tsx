@@ -16,7 +16,7 @@ const UserProfileStatisticComponent = ({user}: Props) => {
       {
         roles
           .filter(role => role.name !== "default-roles-portfoliodev")
-          .map(role => (<Statistic title="Role" value={role.name ?? "USER"} valueStyle={{fontSize: '14px'}} prefix={<SecurityScanOutlined />} />))
+          .map(role => (<Statistic title="Role" value={role.name} valueStyle={{fontSize: '14px'}} prefix={<SecurityScanOutlined />} />))
       }
       <Statistic title="Status" valueStyle={{fontSize: '14px'}} value={user.enabled ? "Active" : "Disabled"} prefix={user.enabled ? <CheckCircleOutlined className="active" /> : <CloseCircleOutlined />} />
       <Statistic title="Current sessions" valueStyle={{fontSize: '14px'}} value={sessions?.length} prefix={<CheckCircleOutlined />} />

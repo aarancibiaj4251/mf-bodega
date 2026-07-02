@@ -73,9 +73,9 @@ const ProductList = () => {
   const [data, setData] = useState<Array<DataType>>();
 
   const getAsyncProducts = async () => {
-    const products = await getProducts();
-    dispatch(setProducts(products));
-    setData(mapperProducts(products));
+    const {content} = await getProducts();
+    dispatch(setProducts(content));
+    setData(mapperProducts(content));
   }
 
   const handleDelete = async (id: string) => {

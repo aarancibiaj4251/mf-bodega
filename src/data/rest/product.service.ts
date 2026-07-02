@@ -2,7 +2,7 @@ import {Product} from '../../domain/interfaces/Product';
 import {apiClient} from '../../config/axios/axios.config';
 import {Category} from '../../domain/interfaces/Category';
 
-export const getProducts = (page = 0): Promise<Array<any>> => {
+export const getProducts = (page = 0): Promise<any> => {
   return new Promise(((resolve, reject) => {
     apiClient.get(`products/page/${page}`, {
       params: {

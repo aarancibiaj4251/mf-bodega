@@ -11,19 +11,23 @@ import SignInSignOutPage from '../pages/sign-in-sign-out/SignInSignOut.component
 import App from '../App';
 import UsersPageComponent from '../pages/users/UsersPage.component';
 import NoAuthorizedPage from '../pages/no-authorized/NoAuthorizedPage';
+import ProtectedRoute from '../components/auth/ProtectedRoute.component';
+import {initKeyCloakLoader} from '../data/loaders/authKeycloakLoader';
 
 const routes = createBrowserRouter([
     {
-      path: '/', element: <App />, children: [
+      path: '/', loader: initKeyCloakLoader, element: <App />, children: [
         {path: '/', element: <ShopPage />},
         {path: '/carrito', element: <CheckOutPage />},
         {path: '/carrito/pago', element: <CheckOutPayment />},
-        {path: '/reporte', element: <ReportPage />},
-        {path: '/productos', element: <ProductList />},
+        {path: '/reporte', element: <ProtectedRoute><ReportPage /></ProtectedRoute>},
+        {path: '/productos', element: <ProtectedRoute><ProductList /></ProtectedRoute>},
         {path: '/informacion', element: <UserInformation />},
         {path: '/sorteo', element: <LotteryPage />},
-        {path: '/users', element: <UsersPageComponent />},
-        {path: '/noAuthorized', element: <NoAuthorizedPage />},
+        {path: '/users', element: <ProtectedRoute>
+            <UsersPageComponent />
+          </ProtectedRoute>},
+        {path: '/no-authorized', element: <NoAuthorizedPage />},
       ]
     },
     {path: '/login', element: <SignInSignOutPage />},

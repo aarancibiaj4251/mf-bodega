@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Card, Tooltip} from 'antd';
 import './UsersPage.component.scss';
 import {useMutation} from '@tanstack/react-query';
@@ -24,10 +24,8 @@ const UsersPageComponent = () => {
     onSuccess: (users) => dispatch(setUsers(users)),
   });
 
-  useLayoutEffect(() => {
-    setTimeout(() => {
-      mutate()
-    }, 2000)
+  useEffect(() => {
+    mutate();
   }, [])
 
   return (
