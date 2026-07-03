@@ -15,7 +15,9 @@ import {initKeyCloakLoader} from '../data/loaders/authKeycloakLoader';
 
 const routes = createBrowserRouter([
     {
-      path: '/', loader: initKeyCloakLoader, element: <App />, children: [
+      path: '/', loader: initKeyCloakLoader,
+      element: <App />,
+      children: [
         {path: '/', element: <ShopPage />},
         {path: '/carrito', element: <CheckOutPage />},
         {path: '/carrito/pago', element: <CheckOutPayment />},
@@ -23,9 +25,7 @@ const routes = createBrowserRouter([
         {path: '/productos', element: <ProtectedRoute><ProductList /></ProtectedRoute>},
         {path: '/informacion', element: <UserInformation />},
         {path: '/sorteo', element: <LotteryPage />},
-        {path: '/users', element: <ProtectedRoute>
-            <UsersPageComponent />
-          </ProtectedRoute>},
+        {path: '/users', element: <ProtectedRoute><UsersPageComponent /></ProtectedRoute>},
         {path: '/no-authorized', element: <NoAuthorizedPage />},
       ]
     },

@@ -42,7 +42,7 @@ const HeaderComponent = () => {
       <Header id="header" className="header flex-no-wrap justify-content-between align-items-center" >
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
         <div className="header__info">
-          { keycloak.authenticated && (<Link to="/informacion" className="color-black">{Helpers.fullName(user)}</Link>)}
+          { keycloak.authenticated && (<Link to="/informacion" className="color-black">{user ? Helpers.fullName(user) : '' }</Link>)}
           {
             lottery && (
               <Popover placement="bottom" content={() => content(user, navigate)} title="Estos son tus tickets">

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import Spinner from "./components/spinner/Spinner.component";
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLoader} from "./redux/loader/loader.selector";
 import ModalLotteryNotificationComponent
@@ -16,6 +15,7 @@ import {userInformation} from './data/rest/user.service';
 import {register} from './data/rest/auth/auth.service';
 import {getGeneralProfiles, getProfiles} from './data/rest/profiles.service';
 import {Helpers} from './utils/helpers';
+import LoaderComponent from './components/loader/Loader.component';
 
 const App = () => {
   const loader = useSelector(selectLoader);
@@ -69,6 +69,10 @@ const App = () => {
             });
         });
     }
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = 'none';
+    }
   }, []);
 
   return (
@@ -77,11 +81,7 @@ const App = () => {
           <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
         <Navigation />
           {
-              loader && (
-                  <div className="spinner">
-                      <Spinner size={"large"}/>
-                  </div>
-              )
+              loader && (<LoaderComponent />)
           }
         <ModalLotteryNotificationComponent />
         </QueryClientProvider>
