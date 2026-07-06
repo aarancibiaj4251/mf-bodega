@@ -34,12 +34,6 @@ const Navigation = () => {
     }
   }, [user?.profiles]);
 
-  const onLogoutClick = () => {
-    dispatch(logout());
-    dispatch(clearCart());
-    keycloak.logout({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL})
-  }
-
   return (
     <Layout style={{minHeight: '100vh'}}>
       <Sider
@@ -55,15 +49,6 @@ const Navigation = () => {
           selectedKeys={[current]}
           items={menuItems}
         />
-        <div className="sidebar__logout">
-          {
-            keycloak.authenticated ? <Menu
-                  style={{backgroundColor: '#04325f', color: 'white', width: '100%', 'borderRight': 'none'}}
-                  mode="inline"
-                  items={[{label: 'Logout', key: 'logout', dashed: true, icon: <LogoutOutlined />, onClick: onLogoutClick} as ItemType]}
-              /> : null
-          }
-        </div>
       </Sider>
       <Layout>
         <HeaderComponent />

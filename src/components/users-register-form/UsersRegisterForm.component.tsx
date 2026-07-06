@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {InfoCircleOutlined, UserOutlined} from '@ant-design/icons';
-import {Input, Tooltip} from 'antd';
+import {Input, Tooltip, notification} from 'antd';
 import ButtonComponent from '../button/Button.component';
 import './UsersRegisterForm.component.scss';
 import {validationSchema} from '../../domain/formik-validations/userRegisterForm';
@@ -12,14 +12,20 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile} from '../../redux/user/userSlice';
 import {selectKeyCloakUsers, selectUserProperties} from '../../redux/user/user.selector';
 import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
+import {useMutationGetUsers} from '../../data/hooks/mutations/useMutationGetUsers';
 
 const UsersRegisterFormComponent = () => {
   const {profile} = useSelector(selectUserProperties);
   const user = useSelector(selectKeyCloakUsers)[0];
   const dispatch = useDispatch();
+  const {mutate: mutateGetUsers} = useMutationGetUsers();
   const {mutate} = useMutation<KeycloakUser, Error, Partial<KeycloakUserFormDto>>({
     mutationFn: createUserKeycloak,
-    onSuccess: (users) => userRegisterForm.resetForm(),
+    onSuccess: async _ => {
+      mutateGetUsers();
+      userRegisterForm.resetForm();
+      notification['success']({message: 'User was created!'});
+    },
   });
   const userRegisterForm = useFormik<Partial<KeycloakUserFormDto>>({
     initialValues: {
@@ -29,9 +35,7 @@ const UsersRegisterFormComponent = () => {
       lastName: 'foobar',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      mutate(values)
-    },
+    onSubmit: (values) => mutate(values),
   });
   useEffect(() => {
     userRegisterForm.resetForm({values: {

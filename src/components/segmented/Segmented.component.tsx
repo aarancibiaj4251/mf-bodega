@@ -9,7 +9,7 @@ interface Props {
 const SegmentedComponent = ({options}: Props) => {
   return (
     <Segmented
-      options={options} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+      options={options}/>
   );
 };
 

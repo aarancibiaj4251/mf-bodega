@@ -6,11 +6,15 @@ export const initKeyCloakLoader = async () => {
   }
   return new Promise(async (resolve, reject) => {
     if (!keycloak.didInitialize) {
-      await keycloak.init({
-        pkceMethod: 'S256',
-        redirectUri: window.location.origin + window.location.pathname,
-        onLoad: 'check-sso',
-      });
+      try {
+        await keycloak.init({
+          pkceMethod: 'S256',
+          redirectUri: window.location.origin + window.location.pathname,
+          onLoad: 'check-sso',
+        });
+      } catch (e) {
+        resolve(false);
+      }
     }
     keycloak.onReady = async (authenticated: boolean) => {
       if (keycloak.authenticated) {

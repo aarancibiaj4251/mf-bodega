@@ -16,9 +16,6 @@
   &__info {
     display: flex;
     align-items: center;
-
-    & > *:last-child {
-      margin-left: 15px;
-    }
+    gap: 10px;
   }
 }

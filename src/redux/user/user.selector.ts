@@ -15,7 +15,10 @@ export const selectKeyCloakUsers = createSelector(
 
 export const selectUserProperties = createSelector(
   [selectUser],
-  state => state.user,
+  state => ({
+    ...state.user,
+    roles: state.user.roles.filter(role => role.name !== "default-roles-portfoliodev"),
+    sessions: state.user.sessions}),
 )
 
 export const selectUserLoader = createSelector(

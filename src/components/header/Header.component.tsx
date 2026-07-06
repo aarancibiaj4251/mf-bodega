@@ -1,18 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Layout, Popover} from 'antd';
+import {Button, Dropdown, Layout, MenuProps, Popover, Space} from 'antd';
 import CartDropDown from '../cart-dropdown/Cart-Dropdown.component';
 import CartIconComponent from '../cart-icon/CartIcon.component';
 import { selectCartItems, selectToggleCart } from '../../redux/cart/cart.selector';
 import Logo from '../../assets/img/logo.png';
 import './Header.component.styles.scss';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {selectCurrentUser} from "../../redux/user/user.selector";
 import {User} from "../../domain/interfaces/user/User";
 import {Helpers} from "../../utils/helpers";
-import {GiftOutlined} from '@ant-design/icons'
+import {GiftOutlined, HistoryOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
 import {selectLottery} from '../../redux/lottery/lottery.selector';
-import {toggle} from '../../redux/cart/cartSlice';
+import {clearCart, toggle} from '../../redux/cart/cartSlice';
 import keycloak from '../../config/auth/keycloak.config';
+import {logout} from '../../redux/user/userSlice';
 
 const { Header } = Layout;
 
@@ -36,13 +37,43 @@ const HeaderComponent = () => {
   const lottery = useSelector(selectLottery);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const items: MenuProps['items'] = [
+    {
+      label: 'Orders',
+      key: '1',
+      icon: <HistoryOutlined />,
+      onClick: () => {
+        navigate('/informacion');
+      }
+    },
+  ];
+
+  if (keycloak.authenticated) {
+    items.push({
+      label: 'Logout',
+      key: '2',
+      icon: <LogoutOutlined />,
+      onClick: async () => {
+        dispatch(logout());
+        dispatch(clearCart());
+        await keycloak.logout({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL})
+      }
+    })
+  }
 
   return (
     <>
       <Header id="header" className="header flex-no-wrap justify-content-between align-items-center" >
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
         <div className="header__info">
-          { keycloak.authenticated && (<Link to="/informacion" className="color-black">{user ? Helpers.fullName(user) : '' }</Link>)}
+          { keycloak.authenticated && user ? Helpers.fullName(user) : '' }
+          <Dropdown menu={{items}}>
+            <a onClick={e => e.preventDefault()}>
+              <Space>
+                <UserOutlined style={{fontSize: '24px'}}/>
+              </Space>
+            </a>
+          </Dropdown>
           {
             lottery && (
               <Popover placement="bottom" content={() => content(user, navigate)} title="Estos son tus tickets">

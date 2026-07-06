@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Button, Tooltip, Popconfirm, Skeleton} from 'antd';
+import {Avatar, Button, Tooltip, Popconfirm, Skeleton, notification} from 'antd';
 import {
   LogoutOutlined,
   UserDeleteOutlined,
@@ -8,11 +8,11 @@ import {
 import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 import {deleteUserKeycloak, removeUserSessions} from '../../data/rest/keycloak/users.service';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteUser} from '../../redux/user/userSlice';
+import {deleteUser, setUserProfile} from '../../redux/user/userSlice';
 import {showErrorNotification} from '../../utils/notifications';
 import UserProfileStatisticComponent from '../user-profile-statistic/UserProfileStatistic.component';
 import UserProfileInformationComponent from '../user-profile-information/UserProfileInformation.component';
-import {selectUserLoader} from '../../redux/user/user.selector';
+import {selectUserLoader, selectUserProperties} from '../../redux/user/user.selector';
 import UserIcon from "../../assets/img/user.jpg";
 
 interface UserProfileProps {
@@ -22,11 +22,18 @@ interface UserProfileProps {
 const UserProfileComponent = ({user}: UserProfileProps) => {
   const dispatch = useDispatch();
   const loader = useSelector(selectUserLoader);
+  const userProperties = useSelector(selectUserProperties);
 
   const onDeleteUser = async () => {
+    if (userProperties.roles.filter(role => role.name === 'ADMINISTRATOR').length) {
+      notification['warning']({message: 'Delete an ADMINISTRATOR user is not allowed.'});
+      return;
+    }
     try {
       await deleteUserKeycloak(user.id);
       dispatch(deleteUser(user.id));
+      dispatch(setUserProfile(null))
+      notification['success']({message: 'User was deleted!'});
     } catch (error) {
       showErrorNotification(error.response.status);
     }
@@ -70,7 +77,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
           </div>
           <Skeleton loading={loader} active title={false} paragraph={{rows: 2}}>
             <div className="flex-nowrap justify-content-between align-items-center gap-15 pt-10 pb-10">
-                <UserProfileStatisticComponent user={user} />
+                <UserProfileStatisticComponent user={userProperties} />
             </div>
           </Skeleton>
           <Button type="primary"

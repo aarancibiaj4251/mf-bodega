@@ -1,10 +1,8 @@
 import React, {useEffect} from 'react';
 import {Card, Tooltip} from 'antd';
 import './UsersPage.component.scss';
-import {useMutation} from '@tanstack/react-query';
-import {getUsersKeycloak} from '../../data/rest/keycloak/users.service';
 import {useDispatch, useSelector} from 'react-redux';
-import {setUserProfile, setUsers} from '../../redux/user/userSlice';
+import {setUserProfile} from '../../redux/user/userSlice';
 import {
   selectKeyCloakUsers,
   selectUserProperties,
@@ -13,20 +11,17 @@ import UsersListComponent from '../../components/users-list/UsersList.component'
 import UsersRegisterFormComponent from '../../components/users-register-form/UsersRegisterForm.component';
 import UserProfileComponent from '../../components/user-profile/UserProfile.component';
 import {UserAddOutlined} from '@ant-design/icons';
+import {useMutationGetUsers} from '../../data/hooks/mutations/useMutationGetUsers';
 
 const UsersPageComponent = () => {
   const {profile} = useSelector(selectUserProperties);
   const dispatch = useDispatch();
   const users = useSelector(selectKeyCloakUsers);
-
-  const {mutate} = useMutation({
-    mutationFn: getUsersKeycloak,
-    onSuccess: (users) => dispatch(setUsers(users)),
-  });
+  const {mutate} = useMutationGetUsers();
 
   useEffect(() => {
     mutate();
-  }, [])
+  }, [users.length]);
 
   return (
     <div className="users-page flex-wrap justify-content-start gap-10">
