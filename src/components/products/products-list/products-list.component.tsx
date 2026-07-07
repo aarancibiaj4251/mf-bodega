@@ -14,9 +14,10 @@ interface ProductListProps {
 const ProductsListComponent = ({products, onHandleChange}: ProductListProps) => {
   const cartItems = useSelector(selectCartItems);
   if (!products.length) {
-    return (<div className="flex-nowrap justify-content-center align-items-center" style={{width: '100%', height: '100vh'}}>
+    return (<h2 className="flex-nowrap justify-content-center align-items-center"
+                style={{width: '100%', height: '100vh', color: 'black'}}>
         No information
-    </div>);
+    </h2>);
   }
 
   return (

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useProduct } from '../../data/hooks/useProduct';
 import {useDispatch, useSelector} from 'react-redux';
 import './Directory.component.scss';
-import {Col, Row} from 'antd';
+import {Col, Row, Skeleton} from 'antd';
 import {useWindowsSizeHeight} from '../../data/hooks/useWindowsSizeHeight';
 import ProductsFiltersComponent from '../products-filters/ProductsFiltersComponent';
 import ProductsSegmentedComponent from '../products-segmented/ProductsSegmented.component';
@@ -36,7 +36,7 @@ const DirectoryComponent = () => {
   const dispatch = useDispatch();
   const {isMobile} = useWindowsSizeHeight();
   const {} = useScrollUp();
-  const {mutate} = useMutation<Category[], Error, {}>({
+  const {mutate, isSuccess} = useMutation<Category[], Error, {}>({
     mutationFn: () => getCategories(),
     onSuccess: categories => dispatch(setCategories(categories)),
   });
@@ -64,15 +64,13 @@ const DirectoryComponent = () => {
       <Col xs={24}>
         <Row justify={'space-between'} style={{gap: '15px 0px'}}>
           <Col xs={24} md={6} lg={4}>
-            {
-              products.length ? (
-                <ProductsFiltersComponent
-                  setProductsRangeMin={setProductsRangeMin}
-                  setProductsRangeMax={setProductsRangeMax}
-                  setProductsCategories={setProductsCategories}
-                />
-              ) : (<div>Error in loading filters</div>)
-            }
+            <Skeleton loading={!isSuccess} active title={false} paragraph={{rows: 4}}>
+              <ProductsFiltersComponent
+                setProductsRangeMin={setProductsRangeMin}
+                setProductsRangeMax={setProductsRangeMax}
+                setProductsCategories={setProductsCategories}
+              />
+            </Skeleton>
           </Col>
           <Col xs={24} md={18} lg={20} style={{padding: '2px 0 0 15px'}}>
             <div className={isMobile ? 'flex-wrap justify-content-between': 'flex-nowrap justify-content-between'} style={{gap: '10px', marginBottom: '10px'}}>
@@ -84,7 +82,11 @@ const DirectoryComponent = () => {
               </div>
             </div>
             <Row justify={isMobile ? 'center' : 'space-between'}>
-              <ProductsListComponent onHandleChange={onHandleChange} products={productsFiltered}/>
+              {
+                products.length ?
+                  (<ProductsListComponent onHandleChange={onHandleChange} products={productsFiltered}/>) :
+                  (<Skeleton className="h-100"/>)
+              }
               <ScrollUpButtonComponent />
             </Row>
             <h3 className="">Showing {productsFiltered.length} of {totalElements}</h3>
