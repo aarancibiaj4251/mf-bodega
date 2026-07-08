@@ -40,11 +40,6 @@ const CollapseComponent = ({setProductsRangeMin, setProductsRangeMax, setProduct
   };
 
   useEffect(() => {
-    setProductsRangeMin(minPriceValue);
-    setProductsRangeMax(maxPriceValue);
-  }, []);
-
-  useEffect(() => {
     setMin(minPriceValue);
     setMax(maxPriceValue);
   }, [minPriceValue, maxPriceValue]);

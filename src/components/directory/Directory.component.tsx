@@ -56,6 +56,11 @@ const DirectoryComponent = () => {
   }, [products]);
 
   useEffect(() => {
+    setProductsRangeMin(minPriceValue);
+    setProductsRangeMax(maxPriceValue);
+  }, [minPriceValue, maxPriceValue]);
+
+  useEffect(() => {
     mutate({});
   }, []);
 
@@ -89,7 +94,10 @@ const DirectoryComponent = () => {
               }
               <ScrollUpButtonComponent />
             </Row>
-            <h3 className="">Showing {productsFiltered.length} of {totalElements}</h3>
+            {
+              Number(productsFiltered.length) ?
+                <h3>Showing {productsFiltered.length} of {totalElements}</h3>: null
+            }
             {
               loading && <ProductLoaderComponent />
             }

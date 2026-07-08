@@ -5,6 +5,9 @@ import {useSelector} from 'react-redux';
 import {selectCartItems} from '../../../redux/cart/cart.selector';
 import {onChangeArgs} from 'ajas-product-card/src/interfaces/interfaces';
 import { motion } from "motion/react"
+import {ShopOutlined} from '@ant-design/icons';
+import {Alert} from 'antd';
+import "./products-list.component.scss"
 
 interface ProductListProps {
   products: Product[];
@@ -14,10 +17,13 @@ interface ProductListProps {
 const ProductsListComponent = ({products, onHandleChange}: ProductListProps) => {
   const cartItems = useSelector(selectCartItems);
   if (!products.length) {
-    return (<h2 className="flex-nowrap justify-content-center align-items-center"
-                style={{width: '100%', height: '100vh', color: 'black'}}>
-        No information
-    </h2>);
+    return (<Alert
+      className="products-list--not-found"
+      message="No products found"
+      description="We are sorry.  The given criteria did not match any products."
+      showIcon
+      icon={<ShopOutlined />}
+    />);
   }
 
   return (
