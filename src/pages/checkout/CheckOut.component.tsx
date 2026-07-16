@@ -45,7 +45,7 @@ const CheckOutPage = () => {
 
   const executePayment = async () => {
     if (!keycloak.authenticated) {
-      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/carrito'});
+      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/cart'});
       return;
     }
     mutate({cartItems, total});

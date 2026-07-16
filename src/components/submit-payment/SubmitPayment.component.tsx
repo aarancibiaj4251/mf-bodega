@@ -33,7 +33,7 @@ const SubmitPaymentComponent = ({token, clearCart, cartItems, total}: Props) => 
 
   const handleCreateOrder = async (): Promise<string> => {
     if (!currentUser) {
-      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/carrito'});
+      await keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/cart'});
       return Promise.reject();
     }
     try {
@@ -48,9 +48,9 @@ const SubmitPaymentComponent = ({token, clearCart, cartItems, total}: Props) => 
     try {
       const order = await approveOrder(orderID, cartItems, total, currentUser);
       clearCart();
-      navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
+      navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
     } catch (e) {
-      navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
+      navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
     }
   };
   return <>

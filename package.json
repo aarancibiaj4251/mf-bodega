@@ -1,6 +1,6 @@
 {
   "name": "@arancibia/bodega",
-  "version": "7.3.1",
+  "version": "7.4.0",
   "scripts": {
     "start": "webpack serve --port 8500 --env NODE_ENV=local",
     "start:dev": "webpack serve --port 8500 --env NODE_ENV=development",

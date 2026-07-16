@@ -69,7 +69,7 @@ const UserInformation = () => {
       </Card> : <Result
         icon={<LoginOutlined />}
         title="Please, log into the app!"
-        extra={<Button type="primary" onClick={() => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/informacion'})}>Log In</Button>}
+        extra={<Button type="primary" onClick={() => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/portal/orders'})}>Log In</Button>}
       />}
     </>
   );

@@ -28,7 +28,8 @@ const App = () => {
     } else {
       let profiles: Profile[] = [];
       const userProfile = keycloak.profile;
-      const hasRole = Helpers.userRoles().length > 0;
+      const role = Helpers.userRoles();
+      const hasRole = role.length > 0;
       const user = {
         email: userProfile.email,
         givenName: userProfile.firstName,
@@ -44,10 +45,9 @@ const App = () => {
           user.id = userInfo.id;
           dispatch(loginSlice(userInfo));
           if (user.hasRole) {
-            getProfiles(user)
+            getProfiles(role)
               .then(userProfiles => {
-                profiles = userProfiles;
-                dispatch(setProfiles(profiles));
+                dispatch(setProfiles(userProfiles));
               })
               .catch(async _ => {
                 profiles = await getGeneralProfiles();

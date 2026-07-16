@@ -5,20 +5,15 @@ import { Layout, Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Footer } from 'antd/es/layout/layout';
 import type {ItemType} from 'antd/lib/menu/hooks/useItems';
-import {LogoutOutlined} from '@ant-design/icons';
 import {selectCurrentUser} from '../redux/user/user.selector';
-import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../redux/user/userSlice';
-import {clearCart} from '../redux/cart/cartSlice';
+import {useSelector} from 'react-redux';
 import {Helpers} from '../utils/helpers';
-import keycloak from '../config/auth/keycloak.config';
 
 const Navigation = () => {
   const {pathname} = useLocation();
   const [current, setCurrent] = useState(pathname);
   let [menuItems, setMenuItems] = useState<ItemType[]>([]);
   const user = useSelector(selectCurrentUser);
-  const dispatch = useDispatch();
 
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key);

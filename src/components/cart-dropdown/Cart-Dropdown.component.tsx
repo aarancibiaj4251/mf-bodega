@@ -34,7 +34,7 @@ const CartDropDown = ({ cartItems, setToggleCart }: Props) => {
         type="ghost"
         className="cart-button"
         onClick={() => {
-          navigate('/carrito');
+          navigate('/cart');
           setToggleCart();
         }}
       >Ir al carrito</Button>

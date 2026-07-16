@@ -43,7 +43,7 @@ const HeaderComponent = () => {
       key: '1',
       icon: <HistoryOutlined />,
       onClick: () => {
-        navigate('/informacion');
+        navigate('/portal/orders');
       }
     },
   ];

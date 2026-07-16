@@ -1,4 +1,24 @@
-import {AreaChartOutlined, EditOutlined, HomeOutlined, ShoppingOutlined, HistoryOutlined, UserOutlined} from '@ant-design/icons';
+import {
+  AreaChartOutlined,
+  EditOutlined,
+  HomeOutlined,
+  ShoppingOutlined,
+  HistoryOutlined,
+  UserOutlined,
+  UngroupOutlined,
+  StarOutlined,
+  ProductOutlined,
+  MergeCellsOutlined,
+  QuestionCircleOutlined,
+  GoldOutlined,
+  FileDoneOutlined,
+  ExclamationCircleOutlined,
+  SettingOutlined,
+  BarcodeOutlined,
+  MessageOutlined,
+  OrderedListOutlined,
+  AuditOutlined, ShoppingCartOutlined
+} from '@ant-design/icons';
 
 export class Constants {
   public static URL_MS_1 = process.env.REACT_APP_API_URL_MS;
@@ -11,6 +31,13 @@ export class Constants {
       'HomeOutlined': HomeOutlined, 'ShoppingOutlined': ShoppingOutlined,
       'AreaChartOutlined': AreaChartOutlined, 'EditOutlined': EditOutlined,
       'HistoryOutlined': HistoryOutlined, 'UserOutlined': UserOutlined,
+      'UngroupOutlined': UngroupOutlined, 'StarOutlined': StarOutlined,
+      'ProductOutlined': ProductOutlined, 'MergeCellsOutlined': MergeCellsOutlined,
+      'QuestionCircleOutlined': QuestionCircleOutlined, 'GoldOutlined': GoldOutlined,
+      'FileDoneOutlined': FileDoneOutlined, 'ExclamationCircleOutlined': ExclamationCircleOutlined,
+      'SettingOutlined': SettingOutlined, 'BarcodeOutlined': BarcodeOutlined,
+      'MessageOutlined': MessageOutlined, 'OrderedListOutlined': OrderedListOutlined,
+      'AuditOutlined': AuditOutlined, 'ShoppingCartOutlined': ShoppingCartOutlined,
     },
   );
 

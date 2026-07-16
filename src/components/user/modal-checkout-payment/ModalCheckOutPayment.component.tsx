@@ -34,10 +34,10 @@ const ModalCheckOutPayment = ({isModalPaymentOpen, setIsModalPaymentOpen, cartIt
             const user: User = await userInformation(currentUser.username);
             dispatch(fetchLoginSuccess(user));
             dispatch(hideLoader());
-            navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
+            navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
         } catch (e) {
             dispatch(hideLoader());
-            navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
+            navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
         } finally {
             form.resetFields();
         }

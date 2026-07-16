@@ -24,9 +24,9 @@ const GooglePayButtonComponent = ({environment}: Props) => {
     try {
       const order = await saveSaleWithGoogle(cartItems, total, user);
       dispatch(clearCart());
-      navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
+      navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.SUCCESS, order} });
     } catch (e) {
-      navigate('/carrito/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
+      navigate('/cart/pago', {state: {message: Constants.MESSAGES.CHECKOUT_PAYMENT.ERROR} });
     }
   };
 

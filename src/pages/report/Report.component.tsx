@@ -2,18 +2,10 @@ import React, {useEffect, useState} from 'react';
 import AreaChartComponent from "../../components/chart/area-chart/area-chart.component";
 import './Report.component.styles.scss';
 import {Button, message, Select} from 'antd';
-import {connect} from "react-redux";
-import {fetchSaleReportStart} from "../../redux/sale/sale.actions";
-import {createStructuredSelector} from "reselect";
-import {selectAnnualSaleReport} from "../../redux/sale/sale.selector";
 import {ReportSale} from "../../domain/interfaces/ReportSale";
 import {generatePDFSale, saleReportAnnual} from '../../data/rest/sale.service';
 
-interface Props {
-  fetchSaleReport: () => void;
-}
-
-const ReportPage = ({fetchSaleReport}: Props) => {
+const ReportPage = () => {
 
   const [report, setReport] = useState<Array<ReportSale>>([]);
   const [year, setYear] = useState<string>('');
@@ -79,12 +71,5 @@ const ReportPage = ({fetchSaleReport}: Props) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  annualSaleReport: selectAnnualSaleReport
-})
 
-const mapDispatchToProps = (dispatch: any) => ({
-  fetchSaleReport: () => dispatch(fetchSaleReportStart()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReportPage);
+export default ReportPage;

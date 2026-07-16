@@ -25,7 +25,16 @@ export interface UserGoogle extends JwtPayload {
 }
 
 export interface Profile {
+  profile: ProfileProperties;
+  children: Profile[];
+}
+
+export interface ProfileProperties {
   id: string;
+  name: string;
+  /**
+   * @deprecated since version 7.3.1
+   */
   description: string;
   icon: any;
   url: string;
@@ -37,8 +46,3 @@ export interface UserRegister {
   password2: string;
 }
 
-export interface UserRequest {
-  id: string;
-  username: string;
-  password: string;
-}
