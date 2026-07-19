@@ -11,13 +11,7 @@ export interface UserState {
 export interface UserProperties {
   profile: KeycloakUser;
   sessions: UserSessions[];
-  roles: UserRole[];
-}
-
-export interface UserRole {
-  id: string;
-  name: string;
-  description: string;
+  roles: string[];
 }
 
 export interface UserSessions {

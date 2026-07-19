@@ -21,7 +21,7 @@ const UsersListItemComponent = ({user}: Props) => {
     const sessions = await getUserSessions(user.id);
     const {realmMappings} = await getUserRoles(user.id);
     dispatch(setUserSessions(sessions));
-    dispatch(setUserRoles(realmMappings));
+    dispatch(setUserRoles(realmMappings.map(realm => realm.name)));
     dispatch(setUserLoader(false));
   }
 

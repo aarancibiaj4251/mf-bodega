@@ -31,6 +31,7 @@ const routes = createBrowserRouter([
         {
           path: '/portal',
           children: [
+            {path: '/portal', element: <Navigate to="/portal/orders" replace />},
             {path: '/portal/orders', element: <UserInformation />},
           ],
         },
@@ -38,6 +39,7 @@ const routes = createBrowserRouter([
           path: '/administration',
           element: <ProtectedRoute><AdministrationPage /></ProtectedRoute>,
           children: [
+            {path: '/administration', element: <Navigate to="/administration/reports" replace />},
             {path: '/administration/reports', element: <ReportPage />},
             {path: '/administration/users', element: <UsersPageComponent />},
           ],
@@ -46,6 +48,7 @@ const routes = createBrowserRouter([
           path: '/inventory',
           element: <ProtectedRoute><AdministrationPage /></ProtectedRoute>,
           children: [
+            {path: '/inventory', element: <Navigate to="/inventory/products" replace />},
             {path: '/inventory/products', element: <ProductList />},
           ],
         },

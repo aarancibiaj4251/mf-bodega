@@ -59,7 +59,8 @@ const App = () => {
           }
         })
         .catch(async () => {
-          dispatch(loginSlice(user))
+          user.id = userProfile.id;
+          dispatch(loginSlice(user));
           register(user)
             .then()
             .catch()

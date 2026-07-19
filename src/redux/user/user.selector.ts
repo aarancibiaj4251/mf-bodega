@@ -17,7 +17,7 @@ export const selectUserProperties = createSelector(
   [selectUser],
   state => ({
     ...state.user,
-    roles: state.user.roles.filter(role => role.name !== "default-roles-portfoliodev"),
+    roles: state.user.roles.filter(role => role !== "default-roles-portfoliodev"),
     sessions: state.user.sessions}),
 )
 

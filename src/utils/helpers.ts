@@ -6,6 +6,7 @@ import {NavLink} from 'react-router-dom';
 import {Constants} from './constants';
 import {Product} from '../domain/interfaces/Product';
 import keycloak from '../config/auth/keycloak.config';
+import {Role} from './Role';
 
 
 export class Helpers {
@@ -55,5 +56,12 @@ export class Helpers {
         (role: string) => !['default-roles-portfoliodev', 'offline_access', 'uma_authorization']
           .includes(role)
       );
+  }
+
+  public static isSuperAdmin(roles: string[] = []): boolean {
+    if (roles.length) {
+      return roles.includes(Role.SUPER_ADMIN);
+    }
+    return this.userRoles().includes(Role.SUPER_ADMIN);
   }
 }

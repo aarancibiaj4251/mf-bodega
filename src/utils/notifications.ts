@@ -5,7 +5,7 @@ export const showErrorNotification = (status: number): void => {
     notification.error({
       message: 'Error',
       description:
-        'You account does not have authorization for this action. Please contact the administrator',
+        'Your account does not have authorization for this action.',
       placement: 'top',
     });
   }

@@ -14,6 +14,7 @@ import UserProfileStatisticComponent from '../user-profile-statistic/UserProfile
 import UserProfileInformationComponent from '../user-profile-information/UserProfileInformation.component';
 import {selectUserLoader, selectUserProperties} from '../../redux/user/user.selector';
 import UserIcon from "../../assets/img/user.jpg";
+import {Helpers} from '../../utils/helpers';
 
 interface UserProfileProps {
   user: KeycloakUser;
@@ -25,10 +26,6 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
   const userProperties = useSelector(selectUserProperties);
 
   const onDeleteUser = async () => {
-    if (userProperties.roles.filter(role => role.name === 'ADMINISTRATOR').length) {
-      notification['warning']({message: 'Delete an ADMINISTRATOR user is not allowed.'});
-      return;
-    }
     try {
       await deleteUserKeycloak(user.id);
       dispatch(deleteUser(user.id));
@@ -60,17 +57,19 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
             <Tooltip title="Change password" color="orange" key="change-password">
               <UserSwitchOutlined style={{fontSize: '24px'}}/>
             </Tooltip>
-            <Tooltip title="Delete user" color="orange" key="delete-user">
-              <Popconfirm
-                placement="bottomLeft"
-                title="Are you sure to delete this user? This action can not be revoked"
-                onConfirm={onDeleteUser}
-                okText="Yes"
-                cancelText="No"
-              >
-                <UserDeleteOutlined style={{fontSize: '24px'}} />
-              </Popconfirm>
-            </Tooltip>
+            {
+              !Helpers.isSuperAdmin(userProperties.roles) ? <Tooltip title="Delete user" color="orange" key="delete-user">
+                <Popconfirm
+                  placement="bottomLeft"
+                  title="Are you sure to delete this user? This action can not be revoked"
+                  onConfirm={onDeleteUser}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <UserDeleteOutlined style={{fontSize: '24px'}} />
+                </Popconfirm>
+              </Tooltip> : null
+            }
             <Tooltip placement="bottom" title="Logout all user's sessions" color="orange" key="logout">
               <LogoutOutlined style={{fontSize: '24px'}} onClick={onRemoveSessions}/>
             </Tooltip>
