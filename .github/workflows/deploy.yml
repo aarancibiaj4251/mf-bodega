@@ -54,3 +54,35 @@ jobs:
           purgePullZone: "true"
           purgePullZoneDelay: "5"
           maxRetries: "5"
+  storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 20.19.4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Upload files to Bunny Storage
+        uses: ayeressian/bunnycdn-storage-deploy@v2.4.0
+        with:
+          source: "storybook-static"
+          destination: "storybook/bodega"
+          storageZoneName: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_NAME }}"
+          storagePassword: "${{ secrets.BUNNY_ARANCIBIA_STORAGE_PASSWORD }}"
+          storageEndpoint: "sg.storage.bunnycdn.com"
+          accessKey: "${{ secrets.BUNNY_API_ACCESS_KEY }}"
+          pullZoneId: "${{ secrets.BUNNY_ARANCIBIA_PULL_ZONE_ID }}"
+          upload: "true"
+          remove: "false"
+          purgePullZone: "true"
+          purgePullZoneDelay: "5"
+          maxRetries: "5"
