@@ -8,5 +8,8 @@
     "src/arancibia-bodega.tsx"
   ],
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test*"]
+  "exclude": [
+    "src/**/*.test*",
+    "src/**/*.stories.*"
+  ]
 }

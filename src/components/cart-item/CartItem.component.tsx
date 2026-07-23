@@ -4,6 +4,7 @@ import Image from '../../assets/img/not-image.jpg';
 import { CartItem } from '../../domain/interfaces/CartItem';
 
 interface Props {
+  /** Interface that contains the product and the quantity saved in the cart */
   cartItem: CartItem;
 }
 

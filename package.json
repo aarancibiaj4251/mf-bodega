@@ -16,7 +16,9 @@
     "watch-tests": "cross-env BABEL_ENV=test jest --watch",
     "prepare": "husky install",
     "coverage": "cross-env BABEL_ENV=test jest --coverage",
-    "build:types": "tsc"
+    "build:types": "tsc",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
@@ -26,6 +28,11 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@babel/runtime": "^7.23.3",
+    "@storybook/addon-a11y": "^10.5.3",
+    "@storybook/addon-docs": "^10.5.3",
+    "@storybook/addon-styling-webpack": "^3.0.2",
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
+    "@storybook/react-webpack5": "^10.5.3",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -34,15 +41,18 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.6",
+    "ajv": "^8.17.1",
     "babel-jest": "^27.5.1",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-storybook": "^10.5.3",
+    "file-loader": "^6.2.0",
     "husky": "^7.0.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
@@ -51,7 +61,9 @@
     "pretty-quick": "^3.1.1",
     "sass": "^1.86.3",
     "sass-loader": "^16.0.5",
+    "storybook": "^10.5.3",
     "style-loader": "^4.0.0",
+    "svg-inline-loader": "^0.8.2",
     "ts-config-single-spa": "^3.0.0",
     "typescript": "^4.9.5",
     "webpack": "^5.89.0",
@@ -60,8 +72,7 @@
     "webpack-config-single-spa-react-ts": "^4.0.0",
     "webpack-config-single-spa-ts": "^4.0.0",
     "webpack-dev-server": "^4.0.0",
-    "webpack-merge": "^5.8.0",
-    "ajv": "^8.17.1"
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@ant-design/icons": "5.6.1",
@@ -99,5 +110,10 @@
     "node": "20.19.4",
     "npm": "10.8.2"
   },
-  "types": "dist/arancibia-main.d.ts"
+  "types": "dist/arancibia-main.d.ts",
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  }
 }

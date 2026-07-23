@@ -1,7 +1,9 @@
 import { Product } from './Product';
 
 export interface CartItem {
+  /** The product in the shop cart */
   product: Product;
+  /** The quantity of the product */
   count: number;
 }
 
