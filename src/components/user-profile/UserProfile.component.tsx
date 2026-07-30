@@ -5,7 +5,6 @@ import {
   UserDeleteOutlined,
   UserSwitchOutlined
 } from '@ant-design/icons';
-import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 import {deleteUserKeycloak, removeUserSessions} from '../../data/rest/keycloak/users.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteUser, setUserProfile} from '../../redux/user/userSlice';
@@ -15,9 +14,10 @@ import UserProfileInformationComponent from '../user-profile-information/UserPro
 import {selectUserLoader, selectUserProperties} from '../../redux/user/user.selector';
 import UserIcon from "../../assets/img/user.jpg";
 import {Helpers} from '../../utils/helpers';
+import {User} from '../../domain/interfaces/user/User';
 
 interface UserProfileProps {
-  user: KeycloakUser;
+  user: User;
 }
 
 const UserProfileComponent = ({user}: UserProfileProps) => {

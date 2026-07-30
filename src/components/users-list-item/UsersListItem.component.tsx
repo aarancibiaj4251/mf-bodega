@@ -1,15 +1,15 @@
 import React from 'react';
 import {Avatar, List, Typography} from 'antd';
-import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 import {setUserLoader, setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserProperties} from '../../redux/user/user.selector';
 const { Text } = Typography;
 import './UsersListItem.component.scss';
 import {getUserRoles, getUserSessions} from '../../data/rest/keycloak/users.service';
+import {User} from '../../domain/interfaces/user/User';
 
 interface Props {
-  user: KeycloakUser;
+  user: User;
 }
 
 const UsersListItemComponent = ({user}: Props) => {

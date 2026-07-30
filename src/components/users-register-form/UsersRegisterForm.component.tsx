@@ -16,7 +16,7 @@ import {useMutationGetUsers} from '../../data/hooks/mutations/useMutationGetUser
 
 const UsersRegisterFormComponent = () => {
   const {profile} = useSelector(selectUserProperties);
-  const user = useSelector(selectKeyCloakUsers)[0];
+  const users = useSelector(selectKeyCloakUsers);
   const dispatch = useDispatch();
   const {mutate: mutateGetUsers} = useMutationGetUsers();
   const {mutate} = useMutation<KeycloakUser, Error, Partial<KeycloakUserFormDto>>({
@@ -120,7 +120,7 @@ const UsersRegisterFormComponent = () => {
           type="ghost"
           size="large"
           htmlType="button"
-          onClick={() => dispatch(setUserProfile(user))}
+          onClick={() => dispatch(setUserProfile(users[0]))}
         >
           Cancel
         </ButtonComponent>

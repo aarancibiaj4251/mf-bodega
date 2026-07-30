@@ -1,27 +1,23 @@
-import {JwtPayload} from 'jwt-decode';
+import {UserSessions} from '../../../redux/user/user-state.interface';
 
 export interface User {
   id: string;
   username: string;
   givenName: string;
+  firstName?: string;
   lastName: string;
   surname: string;
   telephone: string;
   complete: boolean;
   profiles: Array<Profile>;
   email: string;
+  emailVerified?: boolean;
   tickets: any;
   hasRole: boolean;
   isGoogleAccount?: boolean;
-}
-
-export interface UserGoogle extends JwtPayload {
-  email: string;
-  email_verified: string;
-  family_name: string;
-  given_name: string;
-  name: string;
-  picture: string;
+  sessions: UserSessions[];
+  roles: string[];
+  enabled?: boolean;
 }
 
 export interface Profile {
@@ -39,10 +35,3 @@ export interface ProfileProperties {
   icon: any;
   url: string;
 }
-
-export interface UserRegister {
-  username: string;
-  password: string;
-  password2: string;
-}
-

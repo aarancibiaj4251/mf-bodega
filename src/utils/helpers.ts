@@ -1,5 +1,4 @@
-import {Profile, User, UserGoogle} from '../domain/interfaces/user/User';
-import {jwtDecode} from 'jwt-decode';
+import {Profile, User} from '../domain/interfaces/user/User';
 import type {ItemType} from 'antd/lib/menu/hooks/useItems';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
@@ -15,10 +14,6 @@ export class Helpers {
     const lastName = user.lastName?.split(' ') || [''];
     return `${firstName[0]} ${lastName[0]}`;
   }
-
-  public static decodeJwt = (token: string = ''): UserGoogle => {
-    return jwtDecode(token);
-  };
 
   public static buildMenuItems(profiles: Profile[] = []): ItemType[] {
     return this.buildMenuItemsProfile(profiles);
