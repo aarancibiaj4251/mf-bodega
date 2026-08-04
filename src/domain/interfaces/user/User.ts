@@ -1,27 +1,21 @@
-import {JwtPayload} from 'jwt-decode';
-
 export interface User {
   id: string;
   username: string;
   givenName: string;
+  firstName?: string;
   lastName: string;
   surname: string;
   telephone: string;
   complete: boolean;
   profiles: Array<Profile>;
   email: string;
+  emailVerified?: boolean;
   tickets: any;
   hasRole: boolean;
   isGoogleAccount?: boolean;
-}
-
-export interface UserGoogle extends JwtPayload {
-  email: string;
-  email_verified: string;
-  family_name: string;
-  given_name: string;
-  name: string;
-  picture: string;
+  sessions: UserSessions[];
+  roles: string[];
+  enabled?: boolean;
 }
 
 export interface Profile {
@@ -40,9 +34,13 @@ export interface ProfileProperties {
   url: string;
 }
 
-export interface UserRegister {
+export interface UserSessions {
+  id: string;
   username: string;
-  password: string;
-  password2: string;
+  userId: string;
+  ipAddress: string;
+  start: number;
+  lastAccess: number;
+  rememberMe: boolean;
+  transientUser: boolean;
 }
-

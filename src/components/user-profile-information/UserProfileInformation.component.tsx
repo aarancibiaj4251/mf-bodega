@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {List, Tooltip, Typography} from 'antd';
 import {SaveOutlined} from '@ant-design/icons';
-import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 import UserProfileInformationFieldComponent
   from './user-profile-information-field/UserProfileInformationField.component';
+import {User} from '../../domain/interfaces/user/User';
 const { Text } = Typography;
 
 interface Props {
-  user: KeycloakUser;
+  user: User;
 }
 
 const UserProfileInformationComponent = ({user}: Props) => {

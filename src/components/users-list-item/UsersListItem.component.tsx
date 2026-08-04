@@ -1,37 +1,32 @@
 import React from 'react';
 import {Avatar, List, Typography} from 'antd';
-import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
-import {setUserLoader, setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
+import {setUserLoader, setUserProfile} from '../../redux/user/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectUserProperties} from '../../redux/user/user.selector';
+import {selectSelectedUser} from '../../redux/user/user.selector';
 const { Text } = Typography;
 import './UsersListItem.component.scss';
-import {getUserRoles, getUserSessions} from '../../data/rest/keycloak/users.service';
+import {User} from '../../domain/interfaces/user/User';
 
 interface Props {
-  user: KeycloakUser;
+  user: User;
 }
 
 const UsersListItemComponent = ({user}: Props) => {
-  const {profile} = useSelector(selectUserProperties);
+  const selectedUser = useSelector(selectSelectedUser);
   const dispatch = useDispatch();
   const handleClick = async (id: string) => {
-    dispatch(setUserProfile({id}));
     dispatch(setUserLoader(true));
-    const sessions = await getUserSessions(user.id);
-    const {realmMappings} = await getUserRoles(user.id);
-    dispatch(setUserSessions(sessions));
-    dispatch(setUserRoles(realmMappings.map(realm => realm.name)));
+    dispatch(setUserProfile({id}));
     dispatch(setUserLoader(false));
   }
 
   return (
     <List.Item
-      className={profile?.id === user.id ? "listItem-active": ""}
+      className={selectedUser?.id === user.id ? "listItem-active": ""}
       onClick={() => handleClick(user.id)}>
       <List.Item.Meta
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random"/>}
-        title={<a href="https://ant.design">{user.username}</a>}
+        title={user.username}
         description={user.firstName + ' ' + user.lastName}
       />
       <div>{user.email} {user.emailVerified ? <Text type="success"> Email verified</Text>: <Text type="danger">Email not verified</Text>}</div>
