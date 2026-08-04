@@ -11,7 +11,7 @@ import {deleteUser, setUserProfile} from '../../redux/user/userSlice';
 import {showErrorNotification} from '../../utils/notifications';
 import UserProfileStatisticComponent from '../user-profile-statistic/UserProfileStatistic.component';
 import UserProfileInformationComponent from '../user-profile-information/UserProfileInformation.component';
-import {selectUserLoader, selectUserProperties} from '../../redux/user/user.selector';
+import {selectUserLoader} from '../../redux/user/user.selector';
 import UserIcon from "../../assets/img/user.jpg";
 import {Helpers} from '../../utils/helpers';
 import {User} from '../../domain/interfaces/user/User';
@@ -23,7 +23,6 @@ interface UserProfileProps {
 const UserProfileComponent = ({user}: UserProfileProps) => {
   const dispatch = useDispatch();
   const loader = useSelector(selectUserLoader);
-  const userProperties = useSelector(selectUserProperties);
 
   const onDeleteUser = async () => {
     try {
@@ -58,7 +57,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
               <UserSwitchOutlined style={{fontSize: '24px'}}/>
             </Tooltip>
             {
-              !Helpers.isSuperAdmin(userProperties.roles) ? <Tooltip title="Delete user" color="orange" key="delete-user">
+              !Helpers.isSuperAdmin(user.roles) ? <Tooltip title="Delete user" color="orange" key="delete-user">
                 <Popconfirm
                   placement="bottomLeft"
                   title="Are you sure to delete this user? This action can not be revoked"

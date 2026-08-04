@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile} from '../../redux/user/userSlice';
 import {
   selectKeyCloakUsers,
-  selectUserProperties,
+  selectSelectedUser,
 } from '../../redux/user/user.selector';
 import UsersListComponent from '../../components/users-list/UsersList.component';
 import UsersRegisterFormComponent from '../../components/users-register-form/UsersRegisterForm.component';
@@ -14,7 +14,7 @@ import {UserAddOutlined} from '@ant-design/icons';
 import {useMutationGetUsers} from '../../data/hooks/mutations/useMutationGetUsers';
 
 const UsersPageComponent = () => {
-  const {profile} = useSelector(selectUserProperties);
+  const selectedUser = useSelector(selectSelectedUser);
   const dispatch = useDispatch();
   const users = useSelector(selectKeyCloakUsers);
   const {mutate} = useMutationGetUsers();
@@ -49,8 +49,8 @@ const UsersPageComponent = () => {
       <div style={{flex: 6}}>
         <Card>
           {
-            profile ? (
-              <UserProfileComponent key={profile.id} user={profile}/>
+            selectedUser ? (
+              <UserProfileComponent key={selectedUser.id} user={selectedUser}/>
             ) : <UsersRegisterFormComponent/>
           }
         </Card>

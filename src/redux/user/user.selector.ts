@@ -1,27 +1,24 @@
 import { RootState } from '../root-state.interface';
 import { createSelector } from 'reselect';
 
-const selectUser = (state: RootState) => state.user;
+const selectUserState = (state: RootState) => state.user;
 
 export const selectCurrentUser = createSelector(
-  [selectUser],
-  state => state.currentUser,
+  [selectUserState],
+  state => state.authUser,
 )
 
 export const selectKeyCloakUsers = createSelector(
-  [selectUser],
+  [selectUserState],
   state => state.users,
 )
 
-export const selectUserProperties = createSelector(
-  [selectUser],
-  state => ({
-    ...state.user,
-    roles: state.user.roles.filter(role => role !== "default-roles-portfoliodev"),
-    sessions: state.user.sessions}),
+export const selectSelectedUser = createSelector(
+  [selectUserState],
+  state => state.selectedUser
 )
 
 export const selectUserLoader = createSelector(
-  [selectUser],
+  [selectUserState],
   state => state.loader,
 )

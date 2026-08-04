@@ -10,12 +10,12 @@ import {createUserKeycloak} from '../../data/rest/keycloak/users.service';
 import {KeycloakUserFormDto} from '../../data/dto/KeycloakUserForm.dto';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserProfile} from '../../redux/user/userSlice';
-import {selectKeyCloakUsers, selectUserProperties} from '../../redux/user/user.selector';
+import {selectKeyCloakUsers, selectSelectedUser} from '../../redux/user/user.selector';
 import {KeycloakUser} from '../../domain/interfaces/user/KeycloakUser';
 import {useMutationGetUsers} from '../../data/hooks/mutations/useMutationGetUsers';
 
 const UsersRegisterFormComponent = () => {
-  const {profile} = useSelector(selectUserProperties);
+  const selectedUser = useSelector(selectSelectedUser);
   const users = useSelector(selectKeyCloakUsers);
   const dispatch = useDispatch();
   const {mutate: mutateGetUsers} = useMutationGetUsers();
@@ -44,7 +44,7 @@ const UsersRegisterFormComponent = () => {
         firstName: '',
         lastName: '',
       }});
-  }, [profile]);
+  }, [selectedUser]);
   return (
     <>
       <h3>Register a new user</h3>

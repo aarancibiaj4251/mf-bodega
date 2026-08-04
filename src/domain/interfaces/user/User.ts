@@ -1,5 +1,3 @@
-import {UserSessions} from '../../../redux/user/user-state.interface';
-
 export interface User {
   id: string;
   username: string;
@@ -34,4 +32,15 @@ export interface ProfileProperties {
   description: string;
   icon: any;
   url: string;
+}
+
+export interface UserSessions {
+  id: string;
+  username: string;
+  userId: string;
+  ipAddress: string;
+  start: number;
+  lastAccess: number;
+  rememberMe: boolean;
+  transientUser: boolean;
 }
