@@ -35,12 +35,6 @@ export const userSlice = createSlice({
     setUserProfile: (state: UserState, action) => {
       state.user.profile = action.payload ? state.users.find(user => user.id === action.payload.id) : null;
     },
-    setUserSessions: (state: UserState, action) => {
-      state.user.sessions = action.payload;
-    },
-    setUserRoles: (state: UserState, action) => {
-      state.user.roles = action.payload;
-    },
     deleteUser: (state: UserState, action) => {
       state.users = state.users.filter(user => user.id !== action.payload);
     },
@@ -50,6 +44,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const {logout, login, setProfiles, setUsers, setUserProfile, deleteUser, setUserSessions, setUserRoles, setUserLoader} = userSlice.actions;
+export const {logout, login, setProfiles, setUsers, setUserProfile, deleteUser, setUserLoader} = userSlice.actions;
 
 export default userSlice.reducer;

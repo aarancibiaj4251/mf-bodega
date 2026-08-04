@@ -76,7 +76,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
           </div>
           <Skeleton loading={loader} active title={false} paragraph={{rows: 2}}>
             <div className="flex-nowrap justify-content-between align-items-center gap-15 pt-10 pb-10">
-                <UserProfileStatisticComponent user={userProperties} />
+                <UserProfileStatisticComponent user={user} />
             </div>
           </Skeleton>
           <Button type="primary"

@@ -1,11 +1,10 @@
 import React from 'react';
 import {Avatar, List, Typography} from 'antd';
-import {setUserLoader, setUserProfile, setUserRoles, setUserSessions} from '../../redux/user/userSlice';
+import {setUserLoader, setUserProfile} from '../../redux/user/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserProperties} from '../../redux/user/user.selector';
 const { Text } = Typography;
 import './UsersListItem.component.scss';
-import {getUserRoles, getUserSessions} from '../../data/rest/keycloak/users.service';
 import {User} from '../../domain/interfaces/user/User';
 
 interface Props {
@@ -16,12 +15,8 @@ const UsersListItemComponent = ({user}: Props) => {
   const {profile} = useSelector(selectUserProperties);
   const dispatch = useDispatch();
   const handleClick = async (id: string) => {
-    dispatch(setUserProfile({id}));
     dispatch(setUserLoader(true));
-    const sessions = await getUserSessions(user.id);
-    const {realmMappings} = await getUserRoles(user.id);
-    dispatch(setUserSessions(sessions));
-    dispatch(setUserRoles(realmMappings.map(realm => realm.name)));
+    dispatch(setUserProfile({id}));
     dispatch(setUserLoader(false));
   }
 

@@ -3,8 +3,9 @@ import {Constants} from '../../../utils/constants';
 import {KeycloakUser} from '../../../domain/interfaces/user/KeycloakUser';
 import {KeycloakUserRequest} from '../interface/KeycloakUser.request';
 import {KeycloakUserFormDto} from '../../dto/KeycloakUserForm.dto';
+import {User} from '../../../domain/interfaces/user/User';
 
-export const getUsersKeycloak = (): Promise<Array<KeycloakUser>> => {
+export const getUsersKeycloak = (): Promise<Array<User>> => {
   return new Promise(((resolve, reject) => {
     apiClient.get(`${Constants.URL_MS_1}user/keycloak`, {})
       .then(((results) => results.data))
