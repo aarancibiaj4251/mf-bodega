@@ -50,6 +50,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
           className="flex-1"
           size={{xs: 80, sm: 80, md: 100, lg: 100, xxl: 110}}
           src={UserIcon}
+          alt="User Profile"
         />
         <div className="flex-wrap flex-3 gap-5">
           <div className="w-100 flex-no-wrap justify-content-end align-items-center gap-10">
@@ -65,7 +66,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
                   okText="Yes"
                   cancelText="No"
                 >
-                  <UserDeleteOutlined style={{fontSize: '24px'}} />
+                  <UserDeleteOutlined data-testid="DeleteUser" style={{fontSize: '24px'}}/>
                 </Popconfirm>
               </Tooltip> : null
             }
@@ -81,6 +82,7 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
           <Button type="primary"
                   ghost
                   block
+                  data-testid="ButtonVerifiedEmail"
           >
             { user.emailVerified ? 'Send a email or message' : 'Send a email verification'}
           </Button>
