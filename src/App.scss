@@ -1,5 +1,11 @@
 @import 'antd/dist/antd.css';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .flex-wrap {
   display: flex;
   flex-direction: row;
@@ -193,4 +199,8 @@ nav li a {
 
 .padding-10 {
   padding: 10px;
+}
+
+.position-relative {
+  position: relative;
 }

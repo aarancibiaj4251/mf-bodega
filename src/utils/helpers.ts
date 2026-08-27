@@ -59,4 +59,8 @@ export class Helpers {
     }
     return this.userRoles().includes(Role.SUPER_ADMIN);
   }
+
+  public static verifyIsSameUser(id: string): boolean {
+    return keycloak.profile.id === id;
+  }
 }

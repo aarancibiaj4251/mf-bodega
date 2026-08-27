@@ -1,21 +1,21 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Dropdown, Layout, MenuProps, Popover, Space} from 'antd';
+import {Avatar, Button, Dropdown, Layout, MenuProps, Popover, Space} from 'antd';
 import CartDropDown from '../cart-dropdown/Cart-Dropdown.component';
 import CartIconComponent from '../cart-icon/CartIcon.component';
-import { selectCartItems, selectToggleCart } from '../../redux/cart/cart.selector';
+import {selectCartItems, selectToggleCart} from '../../redux/cart/cart.selector';
 import Logo from '../../assets/img/logo.png';
 import './Header.component.styles.scss';
 import {useNavigate} from 'react-router-dom';
-import {selectCurrentUser} from "../../redux/user/user.selector";
-import {User} from "../../domain/interfaces/user/User";
-import {Helpers} from "../../utils/helpers";
+import {selectCurrentUser} from '../../redux/user/user.selector';
+import {User} from '../../domain/interfaces/user/User';
+import {Helpers} from '../../utils/helpers';
 import {GiftOutlined, HistoryOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
 import {selectLottery} from '../../redux/lottery/lottery.selector';
 import {clearCart, toggle} from '../../redux/cart/cartSlice';
 import keycloak from '../../config/auth/keycloak.config';
 import {logout} from '../../redux/user/userSlice';
 
-const { Header } = Layout;
+const {Header} = Layout;
 
 const content = (user: User, navigate: Function) => (
   <div>
@@ -41,7 +41,7 @@ const HeaderComponent = () => {
     {
       label: 'Orders',
       key: '1',
-      icon: <HistoryOutlined />,
+      icon: <HistoryOutlined/>,
       onClick: () => {
         navigate('/portal/orders');
       }
@@ -52,7 +52,7 @@ const HeaderComponent = () => {
     items.push({
       label: 'Logout',
       key: '2',
-      icon: <LogoutOutlined />,
+      icon: <LogoutOutlined/>,
       onClick: async () => {
         dispatch(logout());
         dispatch(clearCart());
@@ -63,29 +63,43 @@ const HeaderComponent = () => {
 
   return (
     <>
-      <Header id="header" className="header flex-no-wrap justify-content-between align-items-center" >
+      <Header id="header" className="header flex-no-wrap justify-content-between align-items-center">
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
-        <div className="header__info">
-          { keycloak.authenticated && user ? Helpers.fullName(user) : '' }
-          <Dropdown menu={{items}}>
-            <a onClick={e => e.preventDefault()}>
-              <Space>
-                <UserOutlined style={{fontSize: '24px'}}/>
-              </Space>
-            </a>
-          </Dropdown>
+        <div className="flex-nowrap align-items-center">
+          {keycloak.authenticated ? (
+              <>
+                <Avatar
+                  className="header__avatar"
+                  size="large">
+                  {user ? user.givenName?.at(0).concat(user.lastName?.at(0)).toUpperCase() : ''}
+                </Avatar>
+              </>
+            ) :
+            (
+              <>
+                {user ? Helpers.fullName(user) : null}
+                <Dropdown menu={{items}}>
+                  <a onClick={e => e.preventDefault()}>
+                    <Space>
+                      <UserOutlined style={{fontSize: '24px'}}/>
+                    </Space>
+                  </a>
+                </Dropdown>
+              </>
+            )
+          }
           {
             lottery && (
               <Popover placement="bottom" content={() => content(user, navigate)} title="Estos son tus tickets">
-                <GiftOutlined style={{ fontSize: '32px', padding: '0 0 0 15px', color: '#08c' }}/>
+                <GiftOutlined style={{fontSize: '32px', padding: '0 0 0 15px', color: '#08c'}}/>
               </Popover>
             )
           }
-          <CartIconComponent onClickIcon={() => dispatch(toggle())} cartItems={cartItems} />
+          <CartIconComponent onClickIcon={() => dispatch(toggle())} cartItems={cartItems}/>
         </div>
       </Header>
       {
-        toggleCart && <CartDropDown cartItems={cartItems} setToggleCart={() => dispatch(toggle())} />
+        toggleCart && <CartDropDown cartItems={cartItems} setToggleCart={() => dispatch(toggle())}/>
       }
     </>
   );

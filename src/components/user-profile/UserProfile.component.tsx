@@ -1,13 +1,12 @@
 import React from 'react';
-import {Avatar, Button, Tooltip, Popconfirm, Skeleton, notification} from 'antd';
+import {Avatar, Button, Tooltip, Skeleton} from 'antd';
 import {
   LogoutOutlined,
   UserDeleteOutlined,
   UserSwitchOutlined
 } from '@ant-design/icons';
-import {deleteUserKeycloak, removeUserSessions} from '../../data/rest/keycloak/users.service';
-import {useDispatch, useSelector} from 'react-redux';
-import {deleteUser, setUserProfile} from '../../redux/user/userSlice';
+import {removeUserSessions} from '../../data/rest/keycloak/users.service';
+import {useSelector} from 'react-redux';
 import {showErrorNotification} from '../../utils/notifications';
 import UserProfileStatisticComponent from '../user-profile-statistic/UserProfileStatistic.component';
 import UserProfileInformationComponent from '../user-profile-information/UserProfileInformation.component';
@@ -15,25 +14,14 @@ import {selectUserLoader} from '../../redux/user/user.selector';
 import UserIcon from "../../assets/img/user.jpg";
 import {Helpers} from '../../utils/helpers';
 import {User} from '../../domain/interfaces/user/User';
+import UserDeletePopUpComponent from '../user-delete-popup/UserDeletePopUp.component';
 
 interface UserProfileProps {
   user: User;
 }
 
 const UserProfileComponent = ({user}: UserProfileProps) => {
-  const dispatch = useDispatch();
   const loader = useSelector(selectUserLoader);
-
-  const onDeleteUser = async () => {
-    try {
-      await deleteUserKeycloak(user.id);
-      dispatch(deleteUser(user.id));
-      dispatch(setUserProfile(null))
-      notification['success']({message: 'User was deleted!'});
-    } catch (error) {
-      showErrorNotification(error.response.status);
-    }
-  }
 
   const onRemoveSessions = async () => {
     try {
@@ -58,17 +46,10 @@ const UserProfileComponent = ({user}: UserProfileProps) => {
               <UserSwitchOutlined style={{fontSize: '24px'}}/>
             </Tooltip>
             {
-              !Helpers.isSuperAdmin(user.roles) ? <Tooltip title="Delete user" color="orange" key="delete-user">
-                <Popconfirm
-                  placement="bottomLeft"
-                  title="Are you sure to delete this user? This action can not be revoked"
-                  onConfirm={onDeleteUser}
-                  okText="Yes"
-                  cancelText="No"
-                >
+              !Helpers.isSuperAdmin(user.roles) ?
+                <UserDeletePopUpComponent userId={user.id}>
                   <UserDeleteOutlined data-testid="DeleteUser" style={{fontSize: '24px'}}/>
-                </Popconfirm>
-              </Tooltip> : null
+                </UserDeletePopUpComponent>: null
             }
             <Tooltip placement="bottom" title="Logout all user's sessions" color="orange" key="logout">
               <LogoutOutlined style={{fontSize: '24px'}} onClick={onRemoveSessions}/>

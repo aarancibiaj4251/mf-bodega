@@ -7,11 +7,14 @@ export const initKeyCloakLoader = async () => {
   return new Promise(async (resolve, reject) => {
     if (!keycloak.didInitialize) {
       try {
-        await keycloak.init({
+        const authenticated = await keycloak.init({
           pkceMethod: 'S256',
           redirectUri: window.location.origin + window.location.pathname,
           onLoad: 'check-sso',
         });
+        if (!authenticated) {
+          resolve(false);
+        }
       } catch (e) {
         resolve(false);
       }

@@ -13,9 +13,13 @@
     width: 50px;
   }
 
-  &__info {
-    display: flex;
-    align-items: center;
+  & > div {
     gap: 10px;
+  }
+
+  &__avatar {
+    align-self: flex-end;
+    color: #f56a00;
+    background-color: #fde3cf;
   }
 }
