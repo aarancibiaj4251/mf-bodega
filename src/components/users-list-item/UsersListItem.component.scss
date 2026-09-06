@@ -1,23 +1,12 @@
-
 .listItem {
   max-width: 100%;
+  overflow: hidden;
 
-  &:hover {
-
-    .listItem--options {
-      display: block;
-      opacity: 1;
-      background-color: #ef5131;
-      border-radius: 5px 10px;
-      position: absolute;
-      height: 100%;
-      top: 0;
-      right: 0;
-    }
-
-    & > .ant-list-item {
-      animation: 1s ease-in-out both decreaseWithListItem;
-    }
+  &--content {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    transition: transform 0.2s ease-out;
   }
 
   &-active {
@@ -25,9 +14,21 @@
   }
 
   &--options {
-    display: none;
-    opacity: 0;
-    animation: 0.4s 0.3s linear both showOptions;
+    display: flex;
+    background-color: #ef5131;
+    border-radius: 5px 10px;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    width: 55px;
+    transform: translateX(100%);
+    transition: transform 0.2s ease-out;
+    z-index: 0;
+
+    &-open {
+      transform: translateX(0);
+    }
 
     &-buttons {
       height: 100%;
@@ -44,23 +45,5 @@
       color: white;
       font-size: 18px;
     }
-  }
-}
-
-@keyframes decreaseWithListItem {
-  from {
-    width: 100%;
-  }
-  to {
-    width: calc(100% - 65px);
-  }
-}
-
-@keyframes showOptions {
-  from {
-    width: 0;
-  }
-  to {
-    width: 55px;
   }
 }

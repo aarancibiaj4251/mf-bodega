@@ -6,7 +6,6 @@ import {selectCartItems, selectToggleCart} from '../../redux/cart/cart.selector'
 import Logo from '../../assets/img/logo.png';
 import './Header.component.styles.scss';
 import {useNavigate} from 'react-router-dom';
-import {selectCurrentUser} from '../../redux/user/user.selector';
 import {User} from '../../domain/interfaces/user/User';
 import {Helpers} from '../../utils/helpers';
 import {GiftOutlined, HistoryOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
@@ -14,6 +13,7 @@ import {selectLottery} from '../../redux/lottery/lottery.selector';
 import {clearCart, toggle} from '../../redux/cart/cartSlice';
 import keycloak from '../../config/auth/keycloak.config';
 import {logout} from '../../redux/user/userSlice';
+import {useState} from 'react';
 
 const {Header} = Layout;
 
@@ -33,7 +33,7 @@ const content = (user: User, navigate: Function) => (
 const HeaderComponent = () => {
   const cartItems = useSelector(selectCartItems);
   const toggleCart = useSelector(selectToggleCart);
-  const user = useSelector(selectCurrentUser);
+  const [user] = useState(keycloak.profile);
   const lottery = useSelector(selectLottery);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const HeaderComponent = () => {
                 <Avatar
                   className="header__avatar"
                   size="large">
-                  {user ? user.givenName?.at(0).concat(user.lastName?.at(0)).toUpperCase() : ''}
+                  {user.firstName?.at(0).concat(user.lastName?.at(0)).toUpperCase()}
                 </Avatar>
               </>
             ) :
