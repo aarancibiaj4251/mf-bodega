@@ -17,7 +17,7 @@ import {
   BarcodeOutlined,
   MessageOutlined,
   OrderedListOutlined,
-  AuditOutlined, ShoppingCartOutlined
+  AuditOutlined, ShoppingCartOutlined, LoginOutlined, LogoutOutlined
 } from '@ant-design/icons';
 
 export class Constants {
@@ -25,6 +25,7 @@ export class Constants {
   public static URL_PAYPAL_V1 = process.env.REACT_APP_API_URL_PAYPAL;
   public static KEYCLOAK_URL = process.env.KEYCLOAK_URL;
   public static KEYCLOAK_REALM = process.env.KEYCLOAK_REALM;
+  public static MAPS_API_KEY = process.env.MAPS_API_KEY;
 
   public static ICONS = Object.create(
     {
@@ -38,9 +39,17 @@ export class Constants {
       'SettingOutlined': SettingOutlined, 'BarcodeOutlined': BarcodeOutlined,
       'MessageOutlined': MessageOutlined, 'OrderedListOutlined': OrderedListOutlined,
       'AuditOutlined': AuditOutlined, 'ShoppingCartOutlined': ShoppingCartOutlined,
+      'LoginOutlined': LoginOutlined, 'LogoutOutlined': LogoutOutlined,
     },
   );
 
+  public static ORDER_STATUS = {
+    PENDING: { code: 0 },
+    ACCEPTED: { code: 1 },
+    SHIPPED: { code: 2 },
+    DELIVERED: { code: 3 },
+    CANCELLED: { code: 4 },
+  };
 
   public static MESSAGES = {
     CHECKOUT_PAYMENT: {

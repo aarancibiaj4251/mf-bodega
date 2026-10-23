@@ -6,6 +6,7 @@ import {Constants} from './constants';
 import {Product} from '../domain/interfaces/Product';
 import keycloak from '../config/auth/keycloak.config';
 import {Role} from './Role';
+import {ORDER_STATUS} from './types';
 
 
 export class Helpers {
@@ -62,5 +63,25 @@ export class Helpers {
 
   public static verifyIsSameUser(id: string): boolean {
     return keycloak.profile.id === id;
+  }
+
+  public static setNumberFormat(value: number, options: Object): string {
+    return new Intl.NumberFormat('locale', options)
+      .format(value);
+  }
+
+  public static orderStatusColor(status: ORDER_STATUS): {background: string, color: string} {
+    const statusColor = {
+      PENDING:   { background: "#FEF3C7", color: "#92400E" },
+      ACCEPTED:  { background: "#DBEAFE", color: "#1D4ED8" },
+      SHIPPED:   { background: "#CFFAFE", color: "#155E75" },
+      DELIVERED: { background: "#DCFCE7", color: "#166534" },
+      CANCELLED: { background: "#FEE2E2", color: "#B91C1C" },
+    };
+    return statusColor[status] || { background: "#FFF2F0", color: "#E67E7E" };
+  }
+
+  public static createIcon(icon: string, options: Object = {}) {
+    return React.createElement(Constants.ICONS[icon], options);
   }
 }

@@ -2,3 +2,35 @@
   display: grid;
   grid-template-columns: 50% auto 25%;
 }
+
+.orders {
+
+  padding: 20px;
+  &__current {
+
+    &--map {
+
+    }
+
+    &--details {
+
+      gap: 20px;
+
+      &-banner {
+
+      }
+
+      &-title {
+        gap: 10px;
+      }
+    }
+  }
+
+  &__previous {
+
+  }
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
+}

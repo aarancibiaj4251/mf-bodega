@@ -7,13 +7,13 @@ import Logo from '../../assets/img/logo.png';
 import './Header.component.styles.scss';
 import {useNavigate} from 'react-router-dom';
 import {User} from '../../domain/interfaces/user/User';
-import {Helpers} from '../../utils/helpers';
-import {GiftOutlined, HistoryOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
+import {GiftOutlined, UserOutlined} from '@ant-design/icons'
 import {selectLottery} from '../../redux/lottery/lottery.selector';
 import {clearCart, toggle} from '../../redux/cart/cartSlice';
 import keycloak from '../../config/auth/keycloak.config';
 import {logout} from '../../redux/user/userSlice';
-import {useState} from 'react';
+import React, {useState} from 'react';
+import {Helpers} from '../../utils/helpers';
 
 const {Header} = Layout;
 
@@ -40,11 +40,14 @@ const HeaderComponent = () => {
   const items: MenuProps['items'] = [
     {
       label: 'Orders',
-      key: '1',
-      icon: <HistoryOutlined/>,
+      key: '0',
+      icon: Helpers.createIcon('HistoryOutlined'),
       onClick: () => {
         navigate('/portal/orders');
       }
+    },
+    {
+      type: 'divider',
     },
   ];
 
@@ -52,12 +55,19 @@ const HeaderComponent = () => {
     items.push({
       label: 'Logout',
       key: '2',
-      icon: <LogoutOutlined/>,
+      icon: Helpers.createIcon('LogoutOutlined'),
       onClick: async () => {
         dispatch(logout());
         dispatch(clearCart());
         await keycloak.logout({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL})
       }
+    })
+  } else {
+    items.push({
+      label: 'Log in',
+      key: '2',
+      icon: Helpers.createIcon('LoginOutlined'),
+      onClick: async () => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/shop'})
     })
   }
 
@@ -66,28 +76,19 @@ const HeaderComponent = () => {
       <Header id="header" className="header flex-no-wrap justify-content-between align-items-center">
         <img src={Logo} alt="LOGO" onClick={() => navigate('/')}/>
         <div className="flex-nowrap align-items-center">
-          {keycloak.authenticated ? (
               <>
-                <Avatar
-                  className="header__avatar"
-                  size="large">
-                  {user.firstName?.at(0).concat(user.lastName?.at(0)).toUpperCase()}
-                </Avatar>
-              </>
-            ) :
-            (
-              <>
-                {user ? Helpers.fullName(user) : null}
-                <Dropdown menu={{items}}>
+                <Dropdown menu={{items}} trigger={['click']}>
                   <a onClick={e => e.preventDefault()}>
-                    <Space>
-                      <UserOutlined style={{fontSize: '24px'}}/>
-                    </Space>
+                    <Avatar
+                      className="header__avatar"
+                      size="large">
+                      {
+                        keycloak.authenticated && user ? user.firstName?.at(0).concat(user.lastName?.at(0)).toUpperCase() : <UserOutlined></UserOutlined>
+                      }
+                    </Avatar>
                   </a>
                 </Dropdown>
               </>
-            )
-          }
           {
             lottery && (
               <Popover placement="bottom" content={() => content(user, navigate)} title="Estos son tus tickets">
