@@ -7,6 +7,7 @@ import {Order} from '../../../domain/interfaces/Order';
 import {Constants} from '../../../utils/constants';
 import {Helpers} from '../../../utils/helpers';
 import {Shipment} from '../../../domain/interfaces/Shipment';
+import './order-details.component.scss'
 
 interface Props {
   open: boolean;

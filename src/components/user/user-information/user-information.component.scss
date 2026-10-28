@@ -28,6 +28,10 @@
 
   &__previous {
 
+    &--table {
+      max-width: 100%;
+      overflow: scroll;
+    }
   }
 }
 

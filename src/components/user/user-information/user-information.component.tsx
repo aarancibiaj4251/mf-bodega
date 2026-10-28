@@ -13,9 +13,8 @@ import {Product} from '../../../domain/interfaces/Product';
 import OrderDetailsComponent from '../../orders/order-details/OrderDetails.component';
 import {Helpers} from '../../../utils/helpers';
 import {User} from '../../../domain/interfaces/user/User';
-import {Button} from '@vibe/core';
-import {Edit, Show, Delete} from '@vibe/icons';
 import {Shipment} from '../../../domain/interfaces/Shipment';
+import OrderDetailsActionsComponent from '../../orders/order-details-actions/OrderDetailsActions.component';
 
 const { Text } = Typography;
 
@@ -62,6 +61,7 @@ const UserInformation = () => {
     {
       title: 'OrderId',
       dataIndex: 'code',
+      fixed: 'left',
       render: (value, record) => <Text onClick={() => showDrawer(record)} strong className="pointer">{value}</Text>
     },
     {
@@ -91,36 +91,8 @@ const UserInformation = () => {
     },
     {
       title: 'Action',
-      render: (value, record, index) => <div className="flex-nowrap gap-10" style={{fontSize: '14px'}}>
-        <Button
-          id="print-order-button"
-          size="large"
-          aria-label="Print order"
-          leftIcon={Show}
-          style={{color: '#84ac79'}}
-          onClick={() => showDrawer(record)}
-        >
-          Preview
-        </Button>
-        <Button
-          id="print-order-button"
-          size="large"
-          aria-label="Print order"
-          leftIcon={Edit}
-          style={{color: '#0049e8'}}
-        >
-          {null}
-        </Button>
-        <Button
-          id="print-order-button"
-          size="large"
-          aria-label="Print order"
-          leftIcon={Delete}
-          style={{color: '#c80036'}}
-        >
-          {null}
-        </Button>
-      </div>
+      fixed: 'right',
+      render: (value, record, index) => <OrderDetailsActionsComponent order={record} showDrawer={showDrawer}/>
     },
   ];
 
@@ -145,7 +117,9 @@ const UserInformation = () => {
             <h1 className="text-center">
               Orders history
             </h1>
-            <Table columns={columns} dataSource={dataType} size="middle" />
+            <div className="orders__previous--table">
+              <Table columns={columns} dataSource={dataType} size="middle" />
+            </div>
             {
               sale ? <OrderDetailsComponent
                 sale={sale}

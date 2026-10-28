@@ -44,11 +44,11 @@ export class Constants {
   );
 
   public static ORDER_STATUS = {
-    PENDING: { code: 0 },
-    ACCEPTED: { code: 1 },
-    SHIPPED: { code: 2 },
-    DELIVERED: { code: 3 },
-    CANCELLED: { code: 4 },
+    PENDING: {code: 0, label: 'PENDING'},
+    ACCEPTED: {code: 1, label: 'ACCEPTED'},
+    SHIPPED: {code: 2, label: 'SHIPPED'},
+    DELIVERED: {code: 3, label: 'DELIVERED'},
+    CANCELLED: {code: 4, label: 'CANCELLED'},
   };
 
   public static MESSAGES = {
