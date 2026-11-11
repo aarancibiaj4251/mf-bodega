@@ -15,6 +15,7 @@ import {Helpers} from '../../../utils/helpers';
 import {User} from '../../../domain/interfaces/user/User';
 import {Shipment} from '../../../domain/interfaces/Shipment';
 import OrderDetailsActionsComponent from '../../orders/order-details-actions/OrderDetailsActions.component';
+import {Constants} from '../../../utils/constants';
 
 const { Text } = Typography;
 
@@ -36,17 +37,13 @@ const UserInformation = () => {
   const [sale, setSale] = useState<Order>(null);
   const [open, setOpen] = useState(false);
   const mutation = useMutation<Order[], Error, {id: string}>({
-    mutationFn: () => getSalesByUser(user.id),
+    mutationFn: async ({id}) => await getSalesByUser(id),
     onSuccess: orders => {
       setOrders(orders);
       setDataType(
         orders.map(({id, code, saleDetail, salePrice, dateRegister, user, shipments}: Order) => {
           const saleProducts = saleDetail.map(detail => detail.product);
-          const salePriceFormat = Helpers.setNumberFormat(salePrice, {
-            style: 'currency',
-            currency: 'JPY',
-            currencyDisplay: 'symbol',
-          });
+          const salePriceFormat = Helpers.setNumberFormat(salePrice, Constants.CURRENCY_FORMAT.JAPANESE);
           return {
             key: id, code: `#${code}`,
             quantity: saleDetail.length, total: salePriceFormat,
@@ -97,10 +94,10 @@ const UserInformation = () => {
   ];
 
   useEffect(() => {
-    if (user) {
+    if (keycloak.authenticated && user.id) {
       mutation.mutate({id: user.id});
     }
-  }, [keycloak.authenticated]);
+  }, [user.id]);
 
   const showDrawer = (record: DataType) => {
     const currentOrder = orders.find((order) => order.id === record.key);
@@ -136,7 +133,7 @@ const UserInformation = () => {
           extra={<ButtonComponent type="primary"
                                   id="LoginButton"
                                   size="middle"
-                                  onClick={() => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/portal/orders'})}>Log
+                                  onClick={() => keycloak.login({redirectUri: process.env.KEYCLOAK_INIT_REDIRECT_URL + '/orders'})}>Log
             In</ButtonComponent>}
         />}
     </>

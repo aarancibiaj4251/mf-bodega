@@ -1,0 +1,110 @@
+.orders {
+  &__statistic {
+    grid-template-columns: repeat(auto-fill, minmax(349px, 0fr));
+    gap: 14px;
+    display: grid;
+    place-items: center;
+
+    &--item {
+      width: 300px;
+      border-radius: 22px;
+      box-shadow: 0 1px 2px #14241c0a, 0 14px 34px -22px #14241c47;
+      border: 1px solid #14241c16;
+      background: linear-gradient(to right, #e7edf2, #d6dbf4);
+    }
+  }
+}
+
+.cs-grid {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+  display: grid;
+}
+
+.cs-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  grid-template-areas:         "id"        "loc"        "tags"        "figs"        "spark";
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  display: grid;
+}
+
+.cs-card__id {
+  grid-area: id;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  display: flex;
+}
+
+.cs-card__name {
+  color: #0F172A;
+}
+
+.cs-card__loc {
+  color: #56615a;
+  font-size: 12.5px;
+  white-space: nowrap;
+  grid-area: loc;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-weight: 600;
+  display: flex;
+
+  & > div {
+    min-width: 40px;
+    overflow: scroll;
+    height: 60px;
+  }
+}
+
+.cs-card__tags {
+  flex-wrap: wrap;
+  grid-area: tags;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  display: flex;
+}
+
+.cs-card__figs {
+  border-top: 1px solid #14241c16;
+  grid-area: figs;
+  grid-template-columns: 40% 60%;
+  gap: 10px;
+  padding-top: 12px;
+  display: grid;
+
+  & * small {
+   color: #64748B;
+  }
+
+  & * b {
+    color: #2563EB;
+  }
+}
+
+.cs-card__spark {
+  grid-area: spark;
+  gap: 4px;
+  display: grid;
+}
+
+.tag {
+  //--c: var(--faint);
+  height: 24px;
+  font-size: 12px;
+  white-space: nowrap;
+  //background: color-mix(in srgb, var(--c) var(--soft), transparent);
+  //color: color-mix(in srgb, var(--c) 55%, var(--text));
+  border-radius: 8px;
+  align-items: center;
+  padding: 0 9px;
+  font-weight: 700;
+  display: inline-flex;
+}

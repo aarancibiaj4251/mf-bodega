@@ -4,7 +4,7 @@ import HeaderComponent from '../components/header/Header.component';
 import { Layout, Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Footer } from 'antd/es/layout/layout';
-import type {ItemType} from 'antd/lib/menu/hooks/useItems';
+import {ItemType, SubMenuType} from 'antd/lib/menu/hooks/useItems';
 import {selectCurrentUser} from '../redux/user/user.selector';
 import {useSelector} from 'react-redux';
 import {Helpers} from '../utils/helpers';
@@ -25,7 +25,10 @@ const Navigation = () => {
 
   useEffect(() => {
     if (user?.profiles) {
-      setMenuItems(Helpers.buildMenuItems(user.profiles));
+      const menuItems: ItemType[] = Helpers.buildMenuItems(user.profiles);
+      const menuWithSubItems = menuItems.filter((item: SubMenuType) => !item.children);
+      const menuWithoutSubItems = menuItems.filter((item: SubMenuType) => item.children);
+      setMenuItems([...menuWithSubItems, ...menuWithoutSubItems]);
     }
   }, [user?.profiles]);
 

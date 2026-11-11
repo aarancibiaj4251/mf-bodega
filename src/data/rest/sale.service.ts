@@ -54,6 +54,15 @@ export const generatePDFSale = (reportSale: ReportSale) => {
     }));
 }
 
+export const getOrders = (): Promise<Array<Order>> => {
+    return new Promise(((resolve, reject) => {
+        apiClient.get(SALE_URL)
+          .then(((results) => results.data))
+          .then((value) => resolve(value))
+          .catch(e => reject(e))
+    }));
+}
+
 export const getSalesByUser = (id: string): Promise<Array<Order>> => {
     return new Promise(((resolve, reject) => {
         apiClient.get(SALE_URL + `/user/${id}`, )

@@ -13,6 +13,8 @@ import NoAuthorizedPage from '../pages/no-authorized/NoAuthorizedPage';
 import ProtectedRoute from '../components/auth/ProtectedRoute.component';
 import {initKeyCloakLoader} from '../data/loaders/authKeycloakLoader';
 import AdministrationPage from '../pages/administration/Administration.component';
+import OrdersPage from '../pages/portal/orders/OrdersPage.component';
+import PortalPage from '../pages/portal/PortalPage.component';
 
 const routes = createBrowserRouter([
     {
@@ -21,6 +23,7 @@ const routes = createBrowserRouter([
       children: [
         {path: '/', element: <Navigate to="/shop" replace />},
         {path: '/shop', element: <ShopPage />},
+        {path: '/orders', element: <UserInformation />},
         {
           path: '/cart',
           children: [
@@ -30,9 +33,10 @@ const routes = createBrowserRouter([
         },
         {
           path: '/portal',
+          element: <ProtectedRoute><PortalPage /></ProtectedRoute>,
           children: [
             {path: '/portal', element: <Navigate to="/portal/orders" replace />},
-            {path: '/portal/orders', element: <UserInformation />},
+            {path: '/portal/orders', element: <OrdersPage />},
           ],
         },
         {

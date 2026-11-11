@@ -65,4 +65,12 @@ export class Constants {
       }
     }
   }
+
+  public static CURRENCY_FORMAT = {
+    JAPANESE: {
+      style: 'currency',
+      currency: 'JPY',
+      currencyDisplay: 'symbol',
+    },
+  }
 }
