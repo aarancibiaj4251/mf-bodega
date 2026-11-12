@@ -19,7 +19,7 @@ const OrderItemComponent = ({order}: Props) => {
   const salePriceFormat = Helpers.setNumberFormat(salePrice, Constants.CURRENCY_FORMAT.JAPANESE);
   const updateStatusRef = useRef(generateNextStatus());
 
-  const {mutate} = useMutation<Shipment, Error, { id: string, status: string, trackingNumber: string }>({
+  const {mutate, isPending} = useMutation<Shipment, Error, { id: string, status: string, trackingNumber: string }>({
     mutationFn: async ({id, status, trackingNumber}) => await updateOrderStatus(id, status, trackingNumber),
     onSuccess: newShipmentStatus => {
       const shipment = new Shipment(newShipmentStatus);
@@ -100,9 +100,9 @@ const OrderItemComponent = ({order}: Props) => {
         size="large"
         onClick={() => updateOrder(order.id, shipment?.status, shipment.trackingNumber)}
         shape="round"
-        disabled={!shipment?.status || shipment?.status === Constants.ORDER_STATUS.DELIVERED.label}
+        disabled={!shipment?.status || shipment?.status === Constants.ORDER_STATUS.DELIVERED.label || isPending}
       >
-        Update Order
+        { isPending ? 'Update status in progress' : 'Update Order'}
       </ButtonComponent>
     </a>
   );

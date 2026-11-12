@@ -9,6 +9,7 @@ import {Constants} from '../../../utils/constants';
 import OrderStatisticComponent from '../../../components/orders/order-statistic/OrderStatistic.component';
 import {Helpers} from '../../../utils/helpers';
 import {motion} from 'motion/react';
+import {Skeleton} from 'antd';
 
 const OrdersPage = () => {
 
@@ -32,7 +33,7 @@ const OrdersPage = () => {
     }, {pendingOrders: [], wholeSale: 0}) as {pendingOrders: Array<{id: string, status: string}>, wholeSale: 0};
   }
 
-  const {mutate} = useMutation<Order[], Error, {}>({
+  const {mutate, isSuccess} = useMutation<Order[], Error, {}>({
     mutationFn: async () => await getOrders(),
     onSuccess: orders => {
       setOrders(orders);
@@ -73,16 +74,20 @@ const OrdersPage = () => {
         />
       </div>
 
-      <div className="cs-grid mt-20">
-        {
-          orders.map((order) => <motion.animate whileHover={{translateY: -5}}>
-            <OrderItemComponent key={order.id} order={order} />
-          </motion.animate>)
-        }
-      </div>
 
-    </div>
-  );
+      <Skeleton loading={!isSuccess} active title={false} paragraph={{rows: 5}}>
+        <div className="cs-grid mt-20">
+          {
+            orders.map((order) => <motion.animate whileHover={{translateY: -5}}>
+              <OrderItemComponent key={order.id} order={order}/>
+            </motion.animate>)
+          }
+        </div>
+      </Skeleton>
+
+</div>
+)
+  ;
 };
 
 export default OrdersPage;

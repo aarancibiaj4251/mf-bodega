@@ -19,7 +19,7 @@ import {showErrorNotification} from '../../utils/notifications';
 const UsersPageComponent = () => {
   const selectedUser = useSelector(selectSelectedUser);
   const dispatch = useDispatch();
-  const users = useSelector(selectKeyCloakUsers);
+  const users = useSelector(selectKeyCloakUsers) || [];
   const {mutate} = useMutationGetUsers();
 
   useEffect(() => {

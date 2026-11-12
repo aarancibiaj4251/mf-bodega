@@ -4,12 +4,15 @@ import './Report.component.styles.scss';
 import {Button, message, Select} from 'antd';
 import {ReportSale} from "../../domain/interfaces/ReportSale";
 import {generatePDFSale, saleReportAnnual} from '../../data/rest/sale.service';
+import {useDispatch} from 'react-redux';
+import {hideLoader, showLoader} from '../../redux/loader/loader.actions';
 
 const ReportPage = () => {
 
   const [report, setReport] = useState<Array<ReportSale>>([]);
   const [year, setYear] = useState<string>('');
   const [years, setYears] = useState<Array<string>>([]);
+  const dispatch = useDispatch();
 
   const getReport = async () => {
     const annualSaleReport = await saleReportAnnual() as Array<ReportSale>;
@@ -20,7 +23,9 @@ const ReportPage = () => {
   }
 
   useEffect(() => {
-    getReport();
+    dispatch(showLoader());
+    getReport()
+      .finally(() => dispatch(hideLoader()));
   }, []);
 
   const handleChange = (year: string) => {

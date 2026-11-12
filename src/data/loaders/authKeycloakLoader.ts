@@ -1,7 +1,9 @@
 import keycloak from '../../config/auth/keycloak.config';
 
 export const initKeyCloakLoader = async () => {
+  const loader = document.getElementById('loader');
   if (keycloak.didInitialize && keycloak.authenticated) {
+    validateLoader(loader);
     return Promise.resolve(true);
   }
   return new Promise(async (resolve, reject) => {
@@ -17,13 +19,22 @@ export const initKeyCloakLoader = async () => {
         }
       } catch (e) {
         resolve(false);
+      } finally {
+        validateLoader(loader);
       }
     }
     keycloak.onReady = async (authenticated: boolean) => {
       if (keycloak.authenticated) {
         await keycloak.loadUserProfile();
       }
+      validateLoader(loader);
       resolve(authenticated);
     }
   })
+}
+
+const validateLoader = (loader: HTMLElement) => {
+  if (loader) {
+    loader.style.display = 'none';
+  }
 }
